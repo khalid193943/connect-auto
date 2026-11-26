@@ -18,7 +18,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <Link href="/admin/compte" className="who">{me.name}</Link>
       </header>
       {children}
-      <TabBar newLeads={fresh} />
+      <TabBar newLeads={fresh} manager={me.role === 'gerant'} />
     </>
   )
 }

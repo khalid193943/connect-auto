@@ -187,3 +187,49 @@
 .slot-row { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; padding: 12px 16px; border-bottom: 1px solid var(--a-line); }
 .slot-row .pv { aspect-ratio: 4/3; border-radius: 10px; overflow: hidden; background: #e8ecef; display: grid; place-items: center; color: #9aa4ae; font-size: 12px; font-weight: 700; }
 .slot-row .pv img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Libellés et liens propres au téléphone / à l'ordinateur */
+.tabbar .lbl-d, .tabbar .desk { display: none; }
+
+/* ==========================================================================
+   Ordinateur : menu à gauche, contenu plus large
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .adm { padding-bottom: 40px; }
+  .adm:has(.tabbar) { padding-left: 260px; }
+  .adm-top { position: fixed; left: 0; right: 0; top: 0; height: 64px; padding: 0 24px; }
+  .adm-top .logo { width: 170px; }
+  .adm:has(.tabbar) .adm-main { padding-top: 92px; }
+  .adm-main { max-width: 1080px; padding: 28px 36px 40px; gap: 20px; }
+  .adm h1 { font-size: 30px; }
+
+  .tabbar {
+    top: 64px; bottom: 0; right: auto; width: 260px;
+    display: flex; flex-direction: column; gap: 2px;
+    border-top: 0; border-right: 1px solid var(--a-line);
+    padding: 18px 14px; overflow-y: auto;
+  }
+  .tabbar a {
+    display: flex; align-items: center; gap: 12px; justify-items: start;
+    padding: 11px 14px; border-radius: 12px; font-size: 15px; font-weight: 650; color: #39424c;
+  }
+  .tabbar a svg { width: 21px; height: 21px; flex: none; }
+  .tabbar a:hover { background: #f2f4f6; }
+  .tabbar a.on { background: var(--a-acc-bg); color: #0f6b30; }
+  .tabbar .badge { position: static; margin-left: auto; }
+  .tabbar .lbl-m, .tabbar .mob { display: none; }
+  .tabbar .lbl-d, .tabbar .desk { display: inline-flex; }
+  .tabbar a.desk { display: flex; }
+  .tabbar .sep { margin: 18px 14px 6px; font-size: 11.5px; font-weight: 750; letter-spacing: .14em; text-transform: uppercase; color: #8a939d; }
+
+  .tiles { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tile.big { grid-column: span 2; }
+  .savebar { bottom: 20px; }
+  .fab { bottom: 28px; right: 28px; }
+  .row { padding: 14px 20px; }
+  .row:hover { background: #f8fafb; }
+  .card { padding: 22px; }
+  .seg a, .seg button { min-height: 40px; }
+  .ph-grid { grid-template-columns: repeat(5, 1fr); }
+  .actions.three { max-width: 640px; }
+}
