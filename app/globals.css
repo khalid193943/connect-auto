@@ -1406,3 +1406,61 @@ html[data-theme='light'] .bcar-img { filter: brightness(0) opacity(.75); }
 html[data-theme='light'] .bcar-item { color: #3b434c; }
 .bcar { grid-template-columns: minmax(0, 1fr); }
 .bcar-view { min-width: 0; overflow: hidden; }
+
+/* ==========================================================================
+   Bandeau des marques, version raffinée (remplace les cartes)
+   ========================================================================== */
+.bcar { display: none; }
+.bmq { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; overflow: hidden; }
+.bmq-bottom { border-top: 1px solid var(--line); padding: 34px 0 40px; }
+.bmq-top { padding: 6px 0 0; }
+.bmq-label { margin: 0; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; font-size: 11.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--dim); text-align: center; }
+.bmq-label b { font: 800 11.5px/1 var(--font-display); letter-spacing: .3em; color: var(--text); }
+.bmq-label i { width: 26px; height: 1px; background: var(--accent); }
+.bmq-view { min-width: 0; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent); }
+.bmq-track { list-style: none; margin: 0; padding: 6px 0; display: flex; align-items: center; width: max-content; gap: clamp(40px, 4.6vw, 76px); animation: bmqRun 70s linear infinite; }
+.bmq:hover .bmq-track { animation-play-state: paused; }
+.bmq-item { display: grid; place-items: center; color: var(--muted); opacity: .62; transition: opacity .3s, color .3s, transform .3s; }
+.bmq-item:hover { opacity: 1; color: var(--text); transform: translateY(-1px); }
+.bmq-logo { width: 74px; height: 46px; display: block; }
+.bmq-img { width: 80px; height: 46px; object-fit: contain; filter: brightness(0) invert(.82); }
+html[data-theme='light'] .bmq-img { filter: brightness(0) opacity(.7); }
+@keyframes bmqRun { to { transform: translateX(calc(-50% - clamp(20px, 2.3vw, 38px))); } }
+@media (max-width: 640px) { .bmq-logo { width: 58px; height: 36px; } .bmq-track { animation-duration: 50s; } .bmq-label i { display: none; } }
+@media (prefers-reduced-motion: reduce) { .bmq-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; } .bmq-item[aria-hidden] { display: none; } }
+
+/* ==========================================================================
+   Pastilles de marques sur les cartes de services (+13)
+   ========================================================================== */
+.svc6-card { position: relative; }
+.svc6-tx { flex: 1; min-width: 0; display: grid; gap: 7px; }
+.svc6-tx b { font-size: 15px; font-weight: 650; }
+.svc6-link { color: inherit; text-decoration: none; }
+.svc6-link::after, .svc-link::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.svc-link { color: inherit; text-decoration: none; }
+.svc .svc-body { display: grid; gap: 10px; }
+.bch { display: inline-flex; align-items: center; gap: 6px; }
+.bch-stack { display: inline-flex; position: relative; z-index: 2; }
+.bch-chip { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; background: #26292e; border: 1.5px solid var(--surface, #1d1f23); color: #cfd5dc; margin-left: -6px; }
+.bch-chip:first-child { margin-left: 0; }
+.bch-logo { width: 17px; height: 11px; display: block; }
+.bch-more { position: relative; z-index: 2; height: 22px; min-width: 32px; padding: 0 7px; border-radius: 999px; border: 1px solid rgba(46,201,92,.45); background: rgba(46,201,92,.1); color: var(--accent); font: 700 11px/1 var(--font-display); cursor: pointer; transition: background .2s, color .2s; }
+.bch-more:hover, .bch-more[aria-expanded='true'] { background: var(--accent); color: #03140a; }
+.bch-pop { position: absolute; inset: 0; z-index: 3; display: grid; grid-template-rows: auto 1fr; gap: 10px; padding: 14px; background: rgba(17,18,21,.94); backdrop-filter: blur(10px); border-radius: inherit; animation: bchIn .22s var(--ease); cursor: default; }
+.bch-pop-head { display: flex; align-items: center; justify-content: space-between; }
+.bch-pop-head b { font: 800 11px/1 var(--font-display); letter-spacing: .24em; text-transform: uppercase; color: var(--accent); }
+.bch-close { width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(255,255,255,.16); background: transparent; color: #e6ebf0; display: grid; place-items: center; cursor: pointer; }
+.bch-close svg { width: 15px; height: 15px; }
+.bch-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px 4px; align-content: center; }
+.bch-cell { display: grid; justify-items: center; gap: 4px; color: #d7dde4; }
+.bch-cell .bch-logo { width: 30px; height: 19px; }
+.bch-cell small { font-size: 9.5px; color: #8f98a3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+@keyframes bchIn { from { opacity: 0; transform: translateY(6px); } }
+html[data-theme='light'] .bch-chip { background: #eef0f3; border-color: #fff; color: #2a3038; }
+@media (max-width: 420px) { .bch-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } .bch-cell small { display: none; } }
+
+/* Menu : nombre de véhicules en exposant + point vert qui pulse */
+.nav-count { position: relative; display: inline-flex; align-items: center; gap: 4px; margin-left: 3px; vertical-align: super; font: 800 10px/1 var(--font-display); color: var(--accent); }
+.nav-count i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(46,201,92,.6); animation: navPulse 2s ease-out infinite; }
+@keyframes navPulse { 0% { box-shadow: 0 0 0 0 rgba(46,201,92,.6); } 70% { box-shadow: 0 0 0 7px rgba(46,201,92,0); } 100% { box-shadow: 0 0 0 0 rgba(46,201,92,0); } }
+@media (prefers-reduced-motion: reduce) { .nav-count i { animation: none; } }

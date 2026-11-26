@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { BrandCarousel } from '@/components/BrandCarousel'
+import { BrandChips } from '@/components/BrandChips'
 import Image from 'next/image'
 import { ArrowRight, CalendarCheck, Clock, MapPin, Phone, Wrench } from 'lucide-react'
 import { getReviews, getServices, getSettings, getVehicles } from '@/lib/data'
@@ -81,6 +83,11 @@ export default async function Home() {
         </form>
       </section>
 
+      {/* ============ MARQUES ============ */}
+      <section className="wrap" style={{ paddingTop: 0 }}>
+        <BrandCarousel logos={s.brandLogos ?? {}} place="top" />
+      </section>
+
       {/* ============ L’ATELIER ============ */}
       <section className="s6 wrap" aria-labelledby="svc-title">
         <div className="s6-head">
@@ -92,16 +99,19 @@ export default async function Home() {
             const I = SERVICE_ICONS[sv.icon] ?? SERVICE_ICONS.wrench
             const photo = slotSrc(img, sv.card)
             return (
-              <Link key={sv.slug} href={`/services/${sv.slug}`} className="svc6-card">
+              <div key={sv.slug} className="svc6-card">
                 <span className="svc6-img">
-                  {photo && <Image src={photo} alt={sv.title} fill sizes="(max-width: 700px) 50vw, 25vw" style={{ objectFit: 'cover' }} />}
+                  {photo && <Image src={photo} alt="" fill sizes="(max-width: 700px) 50vw, 25vw" style={{ objectFit: 'cover' }} />}
                 </span>
                 <span className="svc6-body">
                   <span className="svc6-ico"><I /></span>
-                  <b>{sv.title}</b>
-                  <ArrowRight className="svc6-go" />
+                  <span className="svc6-tx">
+                    <Link href={`/services/${sv.slug}`} className="svc6-link"><b>{sv.title}</b></Link>
+                    <BrandChips />
+                  </span>
+                  <ArrowRight className="svc6-go" aria-hidden />
                 </span>
-              </Link>
+              </div>
             )
           })}
         </div>

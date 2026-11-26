@@ -8,7 +8,7 @@ import { ThemeToggle } from './ThemeToggle'
 import { NAV } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
 
-export function Header({ phone, whatsapp }: { phone: string; whatsapp: string }) {
+export function Header({ phone, whatsapp, stock = 0 }: { phone: string; whatsapp: string; stock?: number }) {
   const path = usePathname()
   const [solid, setSolid] = useState(false)
   const [open, setOpen] = useState(false)
@@ -36,6 +36,7 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
           {NAV.map((n) => (
             <Link key={n.href} href={n.href} aria-current={current(n.href)}>
               {n.label}
+              {n.href === '/occasions' && stock > 0 && <sup className="nav-count" title={`${stock} véhicules en stock`}><i aria-hidden />{stock}</sup>}
             </Link>
           ))}
         </nav>
@@ -66,7 +67,7 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
           <Link href="/">Accueil <ArrowRight /></Link>
           {NAV.map((n) => (
             <Link key={n.href} href={n.href}>
-              {n.label} <ArrowRight />
+              {n.label}{n.href === '/occasions' && stock > 0 && <sup className="nav-count"><i aria-hidden />{stock}</sup>} <ArrowRight />
             </Link>
           ))}
         </nav>
