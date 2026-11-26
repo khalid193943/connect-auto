@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import type { Vehicle } from '@/lib/types'
 import { eur, km, priceHT } from '@/lib/format'
-import { Slot } from './Slot'
+import { Slot, ILLUS } from './Slot'
 
 export const vehicleHref = (v: Vehicle) => `/occasions/${v.category}/${v.slug}`
 export const vehicleName = (v: Vehicle) => `${v.brand} ${v.model}`
@@ -23,12 +23,11 @@ export function VehicleCard({ v, priority }: { v: Vehicle; priority?: boolean })
       </div>
       <Slot
         src={v.photos[0]}
-        icon={v.category}
         alt={`${vehicleName(v)} ${v.version} ${v.year}`}
         sizes="(max-width: 640px) 90vw, (max-width: 1200px) 45vw, 25vw"
         priority={priority}
-        label={v.photos.length ? undefined : 'Photos à venir'}
-        id={v.photos.length ? undefined : v.ref}
+        illus={ILLUS[v.category]}
+        soon={v.photos.length ? undefined : 'Photos à venir'}
       />
       <div className="veh-body">
         <div className="veh-title">

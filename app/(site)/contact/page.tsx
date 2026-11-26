@@ -23,6 +23,7 @@ export default async function Contact() {
       <PageHero
         crumbs={[{ name: 'Contact', url: '/contact' }]}
         eyebrow="Contact & accès"
+        art="voiture"
         title="Parlons de"
         accent="votre véhicule"
         lead="Par téléphone, sur WhatsApp, avec le formulaire ou directement au garage : choisissez ce qui vous arrange."

@@ -19,8 +19,8 @@ export async function shrink(file: File, max = 2000, quality = 0.84): Promise<Fi
   }
 }
 
-export async function uploadPhoto(file: File, folder: string, payload: string): Promise<string> {
-  const small = await shrink(file)
+export async function uploadPhoto(file: File, folder: string, payload: string, raw = false): Promise<string> {
+  const small = raw || file.type === 'image/svg+xml' ? file : await shrink(file)
   const safe = small.name.normalize('NFD').replace(/[^\w.-]+/g, '-').toLowerCase()
   const res = await upload(`${folder}/${safe}`, small, { access: 'public', handleUploadUrl: '/api/upload', clientPayload: payload })
   return res.url

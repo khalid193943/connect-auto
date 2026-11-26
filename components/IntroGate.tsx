@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 const IntroLoader = dynamic(() => import('./IntroLoader'), { ssr: false })
 
 /** Script à placer dans <head> : masque la page tant que l’intro n’a pas démarré (1re visite de la session). */
-export const INTRO_SCRIPT = `try{if(!sessionStorage.getItem('ca_intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-on')}}catch(e){}`
+export const INTRO_SCRIPT = `try{if(/[?&]photos=1/.test(location.search))document.documentElement.classList.add('show-slots');if(!sessionStorage.getItem('ca_intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('intro-on')}}catch(e){}`
 
 export function IntroGate() {
   const [show, setShow] = useState(false)

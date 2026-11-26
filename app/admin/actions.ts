@@ -418,6 +418,17 @@ export async function setSlotImage(slot: string, url: string | null) {
   refreshSite()
 }
 
+export async function setBrandLogo(brand: string, url: string | null) {
+  await requireSession()
+  const s = await settings()
+  const logos = { ...(s.brandLogos ?? {}) }
+  const b = brand.trim().slice(0, 40)
+  if (url && /^https:\/\//.test(url)) logos[b] = url
+  else delete logos[b]
+  await put('settings', { ...s, brandLogos: logos })
+  refreshSite()
+}
+
 /* ---------------- Avis ---------------- */
 export async function saveReview(_: R, fd: FormData): Promise<R> {
   await requireSession()

@@ -2,9 +2,10 @@
 import { useRef, useState } from 'react'
 import { Camera, Loader2, Trash2 } from 'lucide-react'
 import { uploadPhoto } from '@/lib/client-image'
-import { setSlotImage } from '@/app/admin/actions'
+import { setBrandLogo, setSlotImage } from '@/app/admin/actions'
 
-export function SlotUploader({ slot, url, enabled }: { slot: string; url?: string; enabled: boolean }) {
+export function SlotUploader({ slot, url, enabled, brand }: { slot: string; url?: string; enabled: boolean; brand?: boolean }) {
+  const save = (u: string | null) => (brand ? setBrandLogo(slot, u) : setSlotImage(slot, u))
   const [busy, setBusy] = useState(false)
   const [err, setErr] = useState('')
   const input = useRef<HTMLInputElement>(null)
@@ -13,8 +14,8 @@ export function SlotUploader({ slot, url, enabled }: { slot: string; url?: strin
     setBusy(true)
     setErr('')
     try {
-      const u = await uploadPhoto(f, 'site', 'admin')
-      await setSlotImage(slot, u)
+      const u = await uploadPhoto(f, brand ? 'marques' : 'site', 'admin', brand)
+      await save(u)
     } catch {
       setErr('Envoi impossible')
     }
@@ -26,12 +27,12 @@ export function SlotUploader({ slot, url, enabled }: { slot: string; url?: strin
         {busy ? <Loader2 className="spin-ico" /> : <Camera />} {url ? 'Remplacer' : 'Ajouter'}
       </button>
       {url && (
-        <button type="button" className="b sm red" disabled={busy} onClick={async () => { setBusy(true); await setSlotImage(slot, null); setBusy(false) }} aria-label="Retirer la photo">
+        <button type="button" className="b sm red" disabled={busy} onClick={async () => { setBusy(true); await save(null); setBusy(false) }} aria-label="Retirer la photo">
           <Trash2 />
         </button>
       )}
       {err && <span className="hint" style={{ color: 'var(--a-red)' }}>{err}</span>}
-      <input ref={input} type="file" accept="image/*" hidden onChange={(e) => { pick(e.target.files?.[0]); e.target.value = '' }} />
+      <input ref={input} type="file" accept={brand ? 'image/svg+xml,image/png,image/webp' : 'image/*'} hidden onChange={(e) => { pick(e.target.files?.[0]); e.target.value = '' }} />
     </div>
   )
 }

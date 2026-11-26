@@ -87,9 +87,15 @@ const mk = (i: number, v: V): Vehicle => {
 
 const LBC = 'https://www.leboncoin.fr/ad/'
 const TBP = 'https://www.tresbonplan.fr/vehicule-occasion/milhaud/'
+const LBC_MILHAUD = 'https://www.leboncoin.fr/cl/utilitaires/cp_milhaud_30540'
+/** Vus sur Très Bon Plan mais absents de leboncoin le 26/11/2026 : sans doute vendus → masqués, à vérifier par Fouad. */
+const NOT_ON_LEBONCOIN = new Set(['v13', 'v14', 'v15', 'v17', 'v18', 'v19', 'v21', 'v23', 'v24'])
+
+/** À augmenter quand le stock de départ change : les véhicules jamais modifiés dans l’admin sont alors mis à jour. */
+export const SEED_VERSION = 3
 
 /**
- * Stock réel de Connect Auto, repris le 26 novembre 2026 de la boutique leboncoin (1192039)
+ * Stock réel de Connect Auto, repris le 26 novembre 2026 de la boutique leboncoin (1192039, 18 annonces)
  * et de la page Très Bon Plan du garage. Photos à ajouter depuis l’admin.
  */
 export const SEED_VEHICLES: Vehicle[] = [
@@ -260,8 +266,28 @@ export const SEED_VEHICLES: Vehicle[] = [
     extra: 'Équipé d’une nacelle', price: 17990,
     description: 'Trafic L1H1 2.0 dCi 145 Energy, finition Grand Confort, équipé d’une nacelle élévatrice.',
     sourceUrl: TBP + 'renault/trafic-2-0dci-145-cv-nacelle-club/renault-trafic-2-0dci-145-cv-nacelle-club-l1h1-1000-2-0-dci-145ch-energy-grand-confort-2021',
+  }),  mk(25, {
+    category: 'utilitaires', brand: 'Ford', model: 'Transit Custom', version: '300 L2H1 2.0 EcoBlue 130 Ambiente',
+    year: 2018, km: 208675, fuel: 'Diesel', gearbox: 'Manuelle', power: 130,
+    price: 10490,
+    description: 'Transit Custom 300 long (L2H1), moteur 2.0 EcoBlue 130 ch, finition Ambiente.',
+    sourceUrl: LBC_MILHAUD,
   }),
-]
+  mk(26, {
+    category: 'utilitaires', brand: 'Volkswagen', model: 'Transporter', version: 'Fourgon diesel',
+    year: 2011, km: 104650, fuel: 'Diesel', gearbox: 'Manuelle',
+    price: 12990,
+    description: 'Volkswagen Transporter diesel de 2011, 104 650 km.',
+    sourceUrl: LBC_MILHAUD,
+  }),
+  mk(27, {
+    category: 'utilitaires', brand: 'Renault', model: 'Trafic', version: '2.0 dCi 170 L2H1 6 places',
+    year: 2020, km: 154600, fuel: 'Diesel', gearbox: 'Manuelle', power: 170, seats: 6,
+    price: 17999, featured: true,
+    description: 'Trafic long (L2H1) en 6 places, moteur 2.0 dCi 170 ch. Moteur changé (voir le détail avec le garage).',
+    sourceUrl: LBC_MILHAUD,
+  }),
+].map((v) => (NOT_ON_LEBONCOIN.has(v.id) ? { ...v, visible: false } : v))
 
 export const SEED_PRICES: PriceItem[] = [
   { id: 'p1', group: 'Main-d’œuvre', label: 'Taux horaire mécanique', price: '', order: 1 },

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Conseils() {
   return (
     <>
-      <PageHero crumbs={[{ name: 'Conseils', url: '/conseils' }]} eyebrow="Le blog du garage" title="Nos" accent="conseils" lead="Ce que nous expliquons tous les jours au garage, écrit noir sur blanc." />
+      <PageHero crumbs={[{ name: 'Conseils', url: '/conseils' }]} eyebrow="Le blog du garage" art="camion" title="Nos" accent="conseils" lead="Ce que nous expliquons tous les jours au garage, écrit noir sur blanc." />
       <section className="section tight wrap">
         <div className="post-grid">
           {ARTICLES.map((a) => (

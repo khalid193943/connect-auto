@@ -2,9 +2,20 @@
 import { useState } from 'react'
 import { ChevronsLeftRight } from 'lucide-react'
 import { Slot } from './Slot'
+import { slotSrc } from '@/lib/images'
 
 export function BeforeAfter({ images }: { images: Record<string, string> }) {
   const [pos, setPos] = useState(50)
+  if (!slotSrc(images, 'IMG-14') || !slotSrc(images, 'IMG-15')) {
+    return (
+      <div className="ba-fallback" data-reveal>
+        <Slot illus="voiture" alt="Carrosserie et peinture chez Connect Auto" />
+        <ul>
+          {['Débosselage', 'Peinture', 'Pare-chocs', 'Rayures', 'Remise en état'].map((t) => <li key={t} className="tag">{t}</li>)}
+        </ul>
+      </div>
+    )
+  }
   return (
     <div className="ba" style={{ ['--pos' as string]: `${pos}%` }} data-reveal>
       <Slot id="IMG-14" images={images} icon="car" alt="Véhicule avant réparation" sizes="(max-width: 1050px) 100vw, 55vw" />

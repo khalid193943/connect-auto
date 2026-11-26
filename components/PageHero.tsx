@@ -2,9 +2,10 @@ import Link from 'next/link'
 import { JsonLd } from './JsonLd'
 import { breadcrumbs } from '@/lib/schema'
 import { Slot } from './Slot'
+import { CarArt } from './Logo'
 
 export function PageHero({
-  crumbs, eyebrow, title = '', accent, lead, children, slot, images, icon, className,
+  crumbs, eyebrow, title = '', accent, lead, children, slot, images, icon, className, art, artNode,
 }: {
   crumbs: { name: string; url: string }[]
   eyebrow?: string
@@ -16,11 +17,23 @@ export function PageHero({
   images?: Record<string, string>
   icon?: string
   className?: string
+  /** grande illustration à droite : voiture, utilitaire, camion, moto, ou 'logo' (la voiture du logo) */
+  art?: string
+  artNode?: React.ReactNode
 }) {
   const all = [{ name: 'Accueil', url: '/' }, ...crumbs]
   return (
     <section className={`page-hero ${slot ? 'with-img' : ''} ${className ?? ''}`}>
       {slot && <Slot id={slot} images={images} icon={icon} priority alt="" />}
+      {artNode && !slot && <div className="ph-art" aria-hidden>{artNode}</div>}
+      {art && !slot && (
+        <div className="ph-art" aria-hidden>
+          {art === 'logo' ? <CarArt /> : (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={`/illus/${art}.svg`} alt="" />
+          )}
+        </div>
+      )}
       <ol className="crumbs" aria-label="Fil d’Ariane">
         {all.map((c, i) => (
           <li key={c.url}>{i < all.length - 1 ? <Link href={c.url}>{c.name}</Link> : <span aria-current="page">{c.name}</span>}</li>

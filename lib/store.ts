@@ -1,7 +1,8 @@
 import 'server-only'
 import { neon } from '@neondatabase/serverless'
-import type { CollectionName, Collections } from './types'
+import type { CollectionName, Collections, Vehicle } from './types'
 import {
+  SEED_VERSION,
   SEED_CLIENTS, SEED_DOCS, SEED_LEADS, SEED_PRICES, SEED_REVIEWS, SEED_SERVICES, SEED_SETTINGS, SEED_VEHICLES,
 } from './seed'
 
@@ -64,6 +65,22 @@ async function init() {
         await sql`insert into ca_docs (col, id, data) values (${col}, ${row.id}, ${JSON.stringify(row)}::jsonb) on conflict do nothing`
       }
     }
+  }
+  // Mise à jour du stock de départ : remplace les exemples et les véhicules jamais modifiés dans l’admin.
+  const meta = (await sql`select data from ca_docs where col = 'meta' and id = 'seed'`) as { data: { version: number } }[]
+  if ((meta[0]?.data.version ?? 0) < SEED_VERSION) {
+    const rows = (await sql`select id, data from ca_docs where col = 'vehicles'`) as { id: string; data: Vehicle }[]
+    const byId = new Map(rows.map((r) => [r.id, r.data]))
+    for (const v of SEED_VEHICLES) {
+      const cur = byId.get(v.id)
+      if (!cur || cur.demo || cur.updatedAt === cur.createdAt) {
+        await sql`insert into ca_docs (col, id, data) values ('vehicles', ${v.id}, ${JSON.stringify(v)}::jsonb)
+          on conflict (col, id) do update set data = excluded.data, updated_at = now()`
+      }
+    }
+    for (const r of rows) if (r.data.demo && !SEED_VEHICLES.some((v) => v.id === r.id)) await sql`delete from ca_docs where col = 'vehicles' and id = ${r.id}`
+    await sql`insert into ca_docs (col, id, data) values ('meta', 'seed', ${JSON.stringify({ version: SEED_VERSION })}::jsonb)
+      on conflict (col, id) do update set data = excluded.data, updated_at = now()`
   }
 }
 function ensure() {

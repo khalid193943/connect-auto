@@ -178,6 +178,8 @@ export interface Settings {
   instagramUrl?: string
   leboncoinUrl?: string
   images: Record<string, string>
+  /** logos officiels des marques (fichiers envoyés depuis l’admin) */
+  brandLogos?: Record<string, string>
   legal: { company: string; capital: string; rcs: string; siret: string; vat: string; director: string; naf: string }
   docFooter: string
   iban?: string

@@ -19,6 +19,7 @@ export default async function Reprise() {
       <PageHero
         crumbs={[{ name: 'Reprise', url: '/reprise' }]}
         eyebrow="Vente & reprise"
+        art="voiture"
         title="On rachète"
         accent="votre véhicule"
         lead={s.repriseText}

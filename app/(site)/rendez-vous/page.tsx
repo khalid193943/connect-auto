@@ -20,6 +20,7 @@ export default async function RendezVous() {
       <PageHero
         crumbs={[{ name: 'Rendez-vous', url: '/rendez-vous' }]}
         eyebrow="Atelier"
+        art="utilitaire"
         title="Rendez-vous"
         accent="& devis"
         lead="Choisissez une ou plusieurs prestations, indiquez votre véhicule et vos disponibilités : nous vous rappelons pour confirmer le créneau et le prix."

@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         if (isAdmin && !(await getSession())) throw new Error('Non connecté')
         if (!isAdmin && !pathname.startsWith('reprise/')) throw new Error('Chemin refusé')
         return {
-          allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', ...(isAdmin ? ['application/pdf'] : [])],
+          allowedContentTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif', ...(isAdmin ? ['application/pdf', 'image/svg+xml'] : [])],
           maximumSizeInBytes: (isAdmin ? 20 : 12) * 1024 * 1024,
           addRandomSuffix: true,
         }

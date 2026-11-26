@@ -17,6 +17,7 @@ export default async function Services() {
       <PageHero
         crumbs={[{ name: 'Services', url: '/services' }]}
         eyebrow="L’atelier"
+        art="logo"
         title="Nos"
         accent="services"
         lead="Voitures et utilitaires de toutes marques. Un devis clair avant chaque intervention, et une seule équipe du diagnostic à la remise des clés."

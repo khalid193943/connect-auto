@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Slot } from './Slot'
+import { Slot, ILLUS } from './Slot'
 
 export function Gallery({ photos, alt, icon, refId }: { photos: string[]; alt: string; icon: string; refId: string }) {
   const [i, setI] = useState(0)
@@ -11,7 +11,7 @@ export function Gallery({ photos, alt, icon, refId }: { photos: string[]; alt: s
   if (!n) {
     return (
       <div className="gallery">
-        <div className="gallery-main"><Slot icon={icon} id={refId} label="Photos à venir" /></div>
+        <div className="gallery-main"><Slot illus={ILLUS[icon]} alt={alt} soon="Photos à venir" id={refId} label="Photos à venir" /></div>
       </div>
     )
   }

@@ -18,6 +18,7 @@ export default async function Occasions() {
       <PageHero
         crumbs={[{ name: 'Occasions', url: '/occasions' }]}
         eyebrow="Le stock"
+        art="utilitaire"
         title="Nos véhicules"
         accent="d’occasion"
         lead="Voitures, utilitaires, camions et motos, préparés dans notre atelier avant la vente. Un véhicule vous intéresse ? Appelez-nous ou passez l’essayer à Milhaud."

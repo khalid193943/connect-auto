@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { BookLock, Camera, ChevronRight, DatabaseBackup, KeyRound, MessageSquareQuote, PencilLine, Tags, Users, Wrench, Clock } from 'lucide-react'
+import { Award, BookLock, Camera, ChevronRight, DatabaseBackup, KeyRound, MessageSquareQuote, PencilLine, Tags, Users, Wrench, Clock } from 'lucide-react'
 import { requireSession } from '@/lib/auth'
 
 export default async function Plus() {
@@ -11,6 +11,7 @@ export default async function Plus() {
     { href: '/admin/textes#horaires', icon: Clock, t: 'Coordonnées & horaires', d: 'Téléphone, WhatsApp, adresse, horaires' },
     { href: '/admin/photos', icon: Camera, t: 'Photos du site', d: 'Bandeaux, catégories, services' },
     { href: '/admin/avis', icon: MessageSquareQuote, t: 'Avis clients', d: 'Note Google et avis affichés' },
+    { href: '/admin/marques', icon: Award, t: 'Logos des marques', d: 'Bandeau « Toutes marques »' },
     { href: '/admin/registre', icon: BookLock, t: 'Registre des achats', d: 'Livre de police, export' },
     ...(me.role === 'gerant' ? [{ href: '/admin/equipe', icon: Users, t: 'Équipe', d: 'Les 6 comptes d’accès' }] : []),
     ...(me.role === 'gerant' ? [{ href: '/api/admin/export', icon: DatabaseBackup, t: 'Sauvegarde', d: 'Télécharger toutes les données' }] : []),

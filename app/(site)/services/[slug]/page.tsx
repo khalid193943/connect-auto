@@ -9,6 +9,8 @@ import { ServiceCard } from '@/components/ServiceCard'
 import { JsonLd } from '@/components/JsonLd'
 import { SITE_URL } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
+import { slotSrc } from '@/lib/images'
+import { SERVICE_ICONS } from '@/components/icons'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -29,6 +31,7 @@ export default async function ServicePage({ params }: Params) {
   const sv = services.find((x) => x.slug === slug)
   if (!sv) notFound()
   const others = services.filter((x) => x.id !== sv.id).slice(0, 4)
+  const SvcIcon = SERVICE_ICONS[sv.icon] ?? SERVICE_ICONS.wrench
   return (
     <>
       <PageHero
@@ -36,9 +39,10 @@ export default async function ServicePage({ params }: Params) {
         eyebrow="Service atelier · Milhaud"
         title={sv.title}
         lead={sv.short}
-        slot={sv.banner}
+        slot={slotSrc(s.images, sv.banner) ? sv.banner : undefined}
         images={s.images}
         icon={sv.icon}
+        artNode={<span className="svc-big ph-svc"><SvcIcon /></span>}
       >
         <div className="hero-ctas" style={{ marginTop: 30 }}>
           <a href="#devis" className="btn btn-accent">Demander un devis <ArrowRight className="arrow" /></a>

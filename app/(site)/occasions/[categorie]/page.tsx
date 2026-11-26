@@ -6,6 +6,7 @@ import { getVehicles } from '@/lib/data'
 import { CATEGORIES, catOf } from '@/lib/site'
 import { Catalogue } from '@/components/Catalogue'
 import { PageHero } from '@/components/PageHero'
+import { ILLUS } from '@/components/Slot'
 import type { Category } from '@/lib/types'
 
 export const dynamicParams = false
@@ -60,6 +61,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       <PageHero
         crumbs={[{ name: 'Occasions', url: '/occasions' }, { name: c.label, url: `/occasions/${c.key}` }]}
         eyebrow="Le stock"
+        art={ILLUS[c.key]}
         title={c.label}
         accent="d’occasion"
         lead={c.seoText}

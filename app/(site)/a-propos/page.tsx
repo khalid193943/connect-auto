@@ -19,6 +19,7 @@ export default async function About() {
       <PageHero
         crumbs={[{ name: 'Le garage', url: '/a-propos' }]}
         eyebrow="Le garage"
+        art="logo"
         title="Connect Auto,"
         accent="à Milhaud"
         lead={s.aboutText}

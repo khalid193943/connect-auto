@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { BookLock, Camera, Car, FileText, Home, Inbox, KeyRound, LayoutGrid, MessageSquareQuote, PencilLine, Tags, Users, UserRound, Wrench, ExternalLink } from 'lucide-react'
+import { Award, BookLock, Camera, Car, FileText, Home, Inbox, KeyRound, LayoutGrid, MessageSquareQuote, PencilLine, Tags, Users, UserRound, Wrench, ExternalLink } from 'lucide-react'
 
 /** Téléphone : barre d’onglets en bas. Ordinateur : menu complet à gauche. */
 export function TabBar({ newLeads, manager }: { newLeads: number; manager: boolean }) {
@@ -20,6 +20,7 @@ export function TabBar({ newLeads, manager }: { newLeads: number; manager: boole
     { href: '/admin/textes', label: 'Textes & horaires', icon: PencilLine },
     { href: '/admin/photos', label: 'Photos du site', icon: Camera },
     { href: '/admin/avis', label: 'Avis clients', icon: MessageSquareQuote },
+    { href: '/admin/marques', label: 'Logos des marques', icon: Award },
     { href: '/admin/registre', label: 'Registre des achats', icon: BookLock },
     ...(manager ? [{ href: '/admin/equipe', label: 'Équipe', icon: Users }] : []),
     { href: '/admin/compte', label: 'Mon compte', icon: KeyRound },

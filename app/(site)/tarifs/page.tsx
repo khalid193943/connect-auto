@@ -18,6 +18,7 @@ export default async function Tarifs() {
       <PageHero
         crumbs={[{ name: 'Tarifs', url: '/tarifs' }]}
         eyebrow="Transparence"
+        art="logo"
         title="Nos"
         accent="tarifs"
         lead="Prix TTC des prestations courantes. Pour toute réparation, un devis détaillé vous est remis avant le début des travaux."
