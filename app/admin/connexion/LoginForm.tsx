@@ -7,9 +7,10 @@ export function LoginForm({ demo, noUser }: { demo: { login: string; password: s
   const [state, run, pending] = useActionState(loginAction, { ok: false })
   return (
     <form action={run}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="logo" src="/brand/logo-dark.svg" alt="Connect Auto" />
-      <h1 style={{ textAlign: 'center', fontSize: 22 }}>Espace garage</h1>
+      <div className="login-head">
+        <h1>Espace garage</h1>
+        <p>Connectez-vous pour gérer vos véhicules, demandes et factures.</p>
+      </div>
       {demo && (
         <p className="banner info" style={{ margin: 0 }}>
           <span>Version de démonstration : identifiant <b>{demo.login}</b>, mot de passe <b>{demo.password}</b>. Les modifications ne sont pas conservées.</span>

@@ -11,6 +11,7 @@ import { SITE_URL } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
 import { slotSrc } from '@/lib/images'
 import { SERVICE_ICONS } from '@/components/icons'
+import { BodyworkBA } from '@/components/BodyworkBA'
 
 type Params = { params: Promise<{ slug: string }> }
 
@@ -65,6 +66,15 @@ export default async function ServicePage({ params }: Params) {
         </div>
       </section>
 
+      {sv.slug === 'carrosserie-peinture' && (
+        <BodyworkBA
+          before={slotSrc(s.images, 'IMG-14')!}
+          after={slotSrc(s.images, 'IMG-15')!}
+          illustrative={!s.images?.['IMG-14']}
+        />
+      )}
+
+      {sv.slug !== 'carrosserie-peinture' && (
       <section className="section tight band-2">
         <div className="wrap">
           <p className="eyebrow">Comment ça se passe</p>
@@ -75,6 +85,7 @@ export default async function ServicePage({ params }: Params) {
           </div>
         </div>
       </section>
+      )}
 
       <section className="section wrap" id="devis">
         <div className="split">

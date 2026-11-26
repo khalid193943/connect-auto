@@ -1,15 +1,14 @@
-import { LogOut } from 'lucide-react'
 import { requireSession } from '@/lib/auth'
 import { Back } from '@/components/admin/ui'
 import { ActionForm } from '@/components/admin/ActionForm'
-import { changePassword, logoutAction } from '../../actions'
+import { changePassword } from '../../actions'
 
 export default async function Compte() {
   const me = await requireSession()
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
-      <h1>Mon compte</h1>
+      <Back href="/admin/reglages" label="Réglages" />
+      <h1>Mot de passe</h1>
       <p className="sub">{me.name} · identifiant « {me.login} » · {me.role === 'gerant' ? 'Gérant' : 'Équipe'}</p>
       <div className="card">
         <h2>Changer mon mot de passe</h2>
@@ -22,7 +21,6 @@ export default async function Compte() {
         <h2>Astuce</h2>
         <p className="hint">Sur votre téléphone, ouvrez le menu du navigateur puis « Ajouter à l’écran d’accueil » : l’espace garage s’ouvrira comme une application.</p>
       </div>
-      <form action={logoutAction}><button className="b full"><LogOut /> Se déconnecter</button></form>
     </main>
   )
 }

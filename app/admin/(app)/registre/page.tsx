@@ -8,7 +8,7 @@ export default async function Registre() {
   const vehicles = (await list('vehicles')).filter((v) => v.purchase?.date || v.purchase?.sellerName).sort((a, b) => (b.purchase?.date ?? '').localeCompare(a.purchase?.date ?? ''))
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/reglages" label="Réglages" />
       <h1>Registre des achats</h1>
       <p className="sub">Livre de police : chaque véhicule acheté avec la date, le vendeur, sa pièce d’identité et le prix. À conserver et à présenter en cas de contrôle.</p>
       <p className="banner info" style={{ margin: 0 }}>Ces informations se remplissent dans chaque véhicule, rubrique « Achat du véhicule ». Exportez régulièrement le registre pour l’archiver.</p>

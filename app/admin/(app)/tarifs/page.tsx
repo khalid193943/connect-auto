@@ -9,7 +9,7 @@ export default async function Tarifs() {
   const prices = (await list('prices')).sort((a, b) => a.order - b.order)
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Tarifs</h1>
       <p className="sub">Prix TTC affichés sur la page Tarifs. Un prix vide s’affiche « Sur devis ».</p>
       <p className="banner info" style={{ margin: 0 }}>Rappel : le taux horaire TTC et les prix des prestations courantes doivent aussi être affichés à l’atelier.</p>

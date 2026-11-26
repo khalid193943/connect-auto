@@ -12,11 +12,11 @@ export default async function Clients({ searchParams }: { searchParams: Promise<
   return (
     <main className="adm-main">
       <div className="adm-head">
-        <h1>Clients</h1>
-        <Link href="/admin/clients/nouveau" className="b pri sm"><Plus /> Nouveau</Link>
+        <h1>Devis & factures</h1>
+        <Link href="/admin/clients/nouveau" className="b pri sm"><Plus /> Nouveau client</Link>
       </div>
-      <div className="seg">
-        <Link href="/admin/documents">Devis & factures</Link>
+      <div className="switch">
+        <Link href="/admin/documents">Documents</Link>
         <Link href="/admin/clients" className="on">Clients ({clients.length})</Link>
       </div>
       <form><input className="search" name="q" defaultValue={q} placeholder="Nom, société ou téléphone" /></form>

@@ -9,7 +9,7 @@ export default async function Avis() {
   const [reviews, s] = await Promise.all([list('reviews'), getSettings()])
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Avis clients</h1>
       <p className="sub">Note actuelle affichée : {String(s.googleRating).replace('.', ',')}/5 ({s.googleCount} avis). Modifiable dans Textes & horaires.</p>
       <p className="banner info" style={{ margin: 0 }}>Recopiez ici de vrais avis laissés sur Google (avec le prénom affiché sur Google). Le site ne doit jamais afficher d’avis inventés.</p>

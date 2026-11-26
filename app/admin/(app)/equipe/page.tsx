@@ -9,7 +9,7 @@ export default async function Equipe() {
   const users = (await list('users')).sort((a, b) => a.createdAt.localeCompare(b.createdAt))
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/reglages" label="Réglages" />
       <h1>Équipe</h1>
       <p className="sub">{users.length}/6 comptes. Le gérant voit tout ; un compte « équipe » ne gère ni les comptes ni les informations légales.</p>
       {users.map((u) => (

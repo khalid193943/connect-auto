@@ -8,7 +8,7 @@ export default async function Photos() {
   const s = await getSettings()
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Photos du site</h1>
       <p className="sub">Chaque emplacement porte la même référence que sur le site (IMG-01, IMG-02…). Les photos des véhicules se gèrent dans chaque annonce.</p>
       {!HAS_BLOB && <p className="banner warn" style={{ margin: 0 }}>L’envoi de photos sera actif dès que le stockage sera branché sur Vercel.</p>}

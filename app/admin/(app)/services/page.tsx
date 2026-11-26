@@ -8,7 +8,7 @@ export default async function Services() {
   const services = (await list('services')).sort((a, b) => a.order - b.order)
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Services</h1>
       <p className="sub">Touchez un service pour modifier son texte ou son prix.</p>
       <div className="card flat">

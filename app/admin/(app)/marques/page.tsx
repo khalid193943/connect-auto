@@ -11,7 +11,7 @@ export default async function Marques() {
   const logos = s.brandLogos ?? {}
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Logos des marques</h1>
       <p className="sub">Bandeau « Toutes marques » de l’accueil. Sans logo, le nom de la marque s’affiche.</p>
       <p className="banner info" style={{ margin: 0 }}>

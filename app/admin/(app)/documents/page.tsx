@@ -22,13 +22,13 @@ export default async function Documents({ searchParams }: { searchParams: Promis
       <div className="adm-head">
         <h1>Devis & factures</h1>
       </div>
-      <div className="seg">
+      <div className="switch">
         <Link href="/admin/documents" className="on">Documents</Link>
         <Link href="/admin/clients">Clients</Link>
       </div>
       <div className="actions three">
         <Link href="/admin/documents/nouveau?type=devis" className="b sm pri"><Plus /> Devis</Link>
-        <Link href="/admin/documents/nouveau?type=commande" className="b sm"><Plus /> Bon cde</Link>
+        <Link href="/admin/documents/nouveau?type=commande" className="b sm"><Plus /> Commande</Link>
         <Link href="/admin/documents/nouveau?type=facture" className="b sm"><Plus /> Facture</Link>
       </div>
       {unpaid > 0 && <p className="banner warn" style={{ margin: 0 }}>Factures en attente de paiement : <b>{eur(unpaid, 2)}</b></p>}

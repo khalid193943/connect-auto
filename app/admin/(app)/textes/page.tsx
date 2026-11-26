@@ -10,7 +10,7 @@ export default async function Textes() {
   const s = await getSettings()
   return (
     <main className="adm-main">
-      <Back href="/admin/plus" label="Plus" />
+      <Back href="/admin/site" label="Mon site" />
       <h1>Textes & horaires</h1>
 
       <ActionForm action={saveTexts}>
