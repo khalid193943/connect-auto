@@ -107,6 +107,7 @@ export default async function Home() {
                   <span className="svc6-ico"><I /></span>
                   <span className="svc6-tx">
                     <Link href={`/services/${sv.slug}`} className="svc6-link"><b>{sv.title}</b></Link>
+                    <span className="svc6-desc">{sv.short}</span>
                     <BrandChips />
                   </span>
                   <ArrowRight className="svc6-go" aria-hidden />

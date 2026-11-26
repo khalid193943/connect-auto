@@ -1464,3 +1464,36 @@ html[data-theme='light'] .bch-chip { background: #eef0f3; border-color: #fff; co
 .nav-count i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 0 rgba(46,201,92,.6); animation: navPulse 2s ease-out infinite; }
 @keyframes navPulse { 0% { box-shadow: 0 0 0 0 rgba(46,201,92,.6); } 70% { box-shadow: 0 0 0 7px rgba(46,201,92,0); } 100% { box-shadow: 0 0 0 0 rgba(46,201,92,0); } }
 @media (prefers-reduced-motion: reduce) { .nav-count i { animation: none; } }
+
+/* ==========================================================================
+   Services sur téléphone : un service par ligne, grande photo, texte lisible
+   ========================================================================== */
+.svc6-desc { display: none; }
+@media (max-width: 640px) {
+  .svc6 { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .svc6-card { border-radius: 18px; }
+  .svc6-img { aspect-ratio: 16 / 9; }
+  .svc6-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(14,15,18,.55)); pointer-events: none; }
+  .svc6-body { position: relative; align-items: flex-start; gap: 14px; padding: 0 18px 18px; }
+  .svc6-ico { width: 46px; height: 46px; border-radius: 14px; margin-top: -23px; background: var(--accent); color: #03140a; box-shadow: 0 0 0 5px #1d1f23; position: relative; z-index: 2; }
+  .svc6-ico svg { width: 22px; height: 22px; }
+  .svc6-tx { gap: 8px; padding-top: 14px; }
+  .svc6-tx b { font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+  .svc6-desc { display: block; font-size: 14px; line-height: 1.55; color: var(--muted); }
+  .svc6-go { margin-top: 16px; width: 20px; height: 20px; color: var(--accent); }
+  .bch-chip { width: 26px; height: 26px; }
+  .bch-more { height: 24px; font-size: 11.5px; }
+  html[data-theme='light'] .svc6-ico { box-shadow: 0 0 0 5px #fff; }
+  html[data-theme='light'] .svc6-img::after { background: linear-gradient(180deg, transparent 60%, rgba(14,15,18,.25)); }
+  /* page Services : photo moins haute, lecture plus confortable */
+  .svc .slot { aspect-ratio: 16 / 9; }
+  .svc-body { padding: 16px 20px 20px; }
+  .svc-foot { padding: 0 20px 20px; }
+}
+@media (max-width: 640px) {
+  .svc6-body { display: block; padding: 34px 18px 18px; }
+  .svc6-ico { position: absolute; top: -23px; left: 18px; margin: 0; }
+  .svc6-tx { padding-top: 0; }
+  .svc6-tx b { padding-right: 30px; display: block; }
+  .svc6-go { position: absolute; top: 16px; right: 18px; margin: 0; }
+}
