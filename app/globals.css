@@ -1280,3 +1280,17 @@ button.hdr-ico { background: transparent; border: 0; cursor: pointer; padding: 0
 html[data-theme='light'] .rev6-card { background: #fff; border-color: var(--line); }
 html[data-theme='light'] .rev6-card p { color: #2b3138; }
 @media (max-width: 900px) { .rev6 { grid-template-columns: 1fr; } }
+
+/* Logo complet (voiture + mot) */
+.lockup { display: block; width: 100%; height: auto; overflow: visible; }
+.hdr-logo { width: clamp(210px, 19vw, 300px); }
+@media (max-width: 640px) { .hdr-logo { width: 200px; } }
+html[data-theme='light'] .hdr .lockup, html[data-theme='light'] .menu .lockup { --logo-ink: #15181c; }
+html[data-theme='light'] .hdr .lw-connect, html[data-theme='light'] .menu .lw-connect { fill: #15181c; }
+.ftr-logo .lk-road { opacity: .9; }
+.ftr-logo .lk-acc { filter: drop-shadow(0 0 8px rgba(46,201,92,.6)); }
+/* En-tête : traits de la voiture légèrement épaissis pour rester lisibles en petit */
+.hdr-logo { width: clamp(230px, 21vw, 330px); }
+.hdr-logo .lk-ink, .menu .lk-ink { stroke: var(--logo-ink, #F4F6F8); stroke-width: 9px; paint-order: stroke; stroke-linejoin: round; }
+.hdr-logo .lk-acc, .menu .lk-acc { stroke: #2EC95C; stroke-width: 9px; paint-order: stroke; }
+@media (max-width: 640px) { .hdr-logo { width: 215px; } }

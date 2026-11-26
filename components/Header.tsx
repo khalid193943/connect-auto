@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ArrowRight, Menu, MessageCircle, Phone, Search, X } from 'lucide-react'
-import { LogoWord } from './Logo'
+import { LogoLockup } from './Logo'
 import { ThemeToggle } from './ThemeToggle'
 import { NAV } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
@@ -30,7 +30,7 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
     <>
       <header className={`hdr ${solid ? 'solid' : ''}`}>
         <Link href="/" className="hdr-logo" aria-label="Connect Auto, accueil">
-          <LogoWord id="hdrlogo" />
+          <LogoLockup id="hdrlogo" />
         </Link>
         <nav className="hdr-nav" aria-label="Navigation principale">
           {NAV.map((n) => (
@@ -55,8 +55,8 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
 
       <div className={`menu ${open ? 'open' : ''}`} role="dialog" aria-modal="true" aria-label="Menu" hidden={!open}>
         <div className="menu-top">
-          <Link href="/" style={{ width: 150 }} aria-label="Accueil">
-            <LogoWord id="menulogo" />
+          <Link href="/" style={{ width: 230 }} aria-label="Accueil">
+            <LogoLockup id="menulogo" />
           </Link>
           <button className="hdr-burger" style={{ display: 'grid' }} aria-label="Fermer le menu" onClick={() => setOpen(false)}>
             <X />
