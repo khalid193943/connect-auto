@@ -1294,3 +1294,7 @@ html[data-theme='light'] .hdr .lw-connect, html[data-theme='light'] .menu .lw-co
 .hdr-logo .lk-ink, .menu .lk-ink { stroke: var(--logo-ink, #F4F6F8); stroke-width: 9px; paint-order: stroke; stroke-linejoin: round; }
 .hdr-logo .lk-acc, .menu .lk-acc { stroke: #2EC95C; stroke-width: 9px; paint-order: stroke; }
 @media (max-width: 640px) { .hdr-logo { width: 215px; } }
+/* Logo empilé (CONNECT / AUTO) : plus haut, donc un peu moins large */
+.hdr-logo { width: clamp(170px, 15vw, 230px); }
+@media (max-width: 640px) { .hdr-logo { width: 160px; } }
+.ftr-logo { max-width: 980px; margin-inline: auto; }

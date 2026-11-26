@@ -45,7 +45,7 @@ export function CarArt({ className, ink = '#F4F6F8', accent = '#2EC95C' }: { cla
 
 import lockup from '@/lib/brand/lockup.json'
 
-/** Logo complet horizontal : la voiture du logo + le mot-symbole, sur une même ligne de sol verte. */
+/** Logo complet : la voiture à gauche, CONNECT en haut et AUTO en dessous. */
 export function LogoLockup({ className, id = 'lk' }: { className?: string; id?: string }) {
   return (
     <svg className={`lockup ${className ?? ''}`} viewBox={lockup.vb} role="img" aria-label="Connect Auto">
@@ -61,9 +61,8 @@ export function LogoLockup({ className, id = 'lk' }: { className?: string; id?: 
         </linearGradient>
         <linearGradient id={`${id}r`} x1="0" x2="1">
           <stop offset="0" stopColor="#2EC95C" stopOpacity="0" />
-          <stop offset=".12" stopColor="#2EC95C" />
-          <stop offset=".75" stopColor="#2EC95C" stopOpacity=".5" />
-          <stop offset="1" stopColor="#2EC95C" stopOpacity="0" />
+          <stop offset=".25" stopColor="#2EC95C" />
+          <stop offset="1" stopColor="#2EC95C" stopOpacity=".7" />
         </linearGradient>
       </defs>
       <g transform={lockup.carTf}>
@@ -75,14 +74,12 @@ export function LogoLockup({ className, id = 'lk' }: { className?: string; id?: 
           ),
         )}
       </g>
-      <g transform={lockup.wordTf}>
-        <g transform={W.transform}>
-          <path className="lw-connect" d={W.connect} fill={`url(#${id}w)`} fillRule="evenodd" />
-          <path className="lw-auto" d={W.auto} fill={`url(#${id}a)`} fillRule="evenodd" />
-          <circle className="lw-hub" cx={W.hub[0]} cy={W.hub[1]} r="11" fill="#2EC95C" />
-        </g>
+      <g transform={lockup.textTf}>
+        <path className="lw-connect" d={W.connect} fill={`url(#${id}w)`} fillRule="evenodd" />
+        <circle className="lw-hub" cx={W.hub[0]} cy={W.hub[1]} r="11" fill="#2EC95C" />
+        <path className="lw-auto" transform={lockup.autoTf} d={W.auto} fill={`url(#${id}a)`} fillRule="evenodd" />
       </g>
-      <rect className="lk-road" x={lockup.road[0]} y={lockup.road[1]} width={lockup.road[2]} height="2.2" rx="1.1" fill={`url(#${id}r)`} />
+      <rect className="lk-road" x={lockup.road[0]} y={lockup.road[1]} width={lockup.road[2]} height="2.4" rx="1.2" fill={`url(#${id}r)`} />
     </svg>
   )
 }
