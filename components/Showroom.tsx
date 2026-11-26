@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, ArrowUpRight, MessageCircle } from 'lucide-react'
 import type { Vehicle } from '@/lib/types'
 import { eur, km, priceHT, waHref } from '@/lib/format'
-import { ILLUS } from './Slot'
+import { NoPhoto } from './NoPhoto'
 import { vehiclePicture } from '@/lib/vehicle-photos'
 
 const CAT: Record<string, string> = { voitures: 'Voiture', utilitaires: 'Utilitaire', camions: 'Camion', motos: 'Moto' }
@@ -70,12 +70,7 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
             {pic ? (
               <Image src={pic.src} alt={`${v.brand} ${v.model} ${v.version}`} fill sizes="(max-width: 1000px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
             ) : (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="sr-illus" src={`/illus/${ILLUS[v.category]}.svg`} alt={`${v.brand} ${v.model}`} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="sr-illus sr-reflect" src={`/illus/${ILLUS[v.category]}.svg`} alt="" aria-hidden />
-              </>
+              <NoPhoto brand={v.brand} model={v.model} category={v.category} big />
             )}
           </div>
           <span className="sr-tags">
@@ -119,8 +114,7 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
               {vehiclePicture(x) ? (
                 <Image src={vehiclePicture(x)!.src} alt="" fill sizes="160px" style={{ objectFit: 'cover' }} />
               ) : (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={`/illus/${ILLUS[x.category]}.svg`} alt="" />
+                <NoPhoto brand="" model="" category={x.category} />
               )}
             </span>
             <span className="sr-thumb-txt"><b>{x.brand} {x.model}</b><span className="num">{x.year} · {eur(x.price)}</span></span>

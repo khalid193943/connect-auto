@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ArrowRight, Menu, MessageCircle, Phone, X } from 'lucide-react'
+import { ArrowRight, Menu, MessageCircle, Phone, Search, X } from 'lucide-react'
 import { LogoWord } from './Logo'
 import { NAV } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
@@ -39,11 +39,9 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
           ))}
         </nav>
         <div className="hdr-cta">
-          <a className="hdr-phone" href={telHref(phone)}>
-            <span className="ico"><Phone /></span>
-            <span>{phone}</span>
-          </a>
-          <Link href="/rendez-vous" className="btn btn-accent btn-sm">
+          <Link className="hdr-ico" href="/occasions" aria-label="Rechercher un véhicule"><Search /></Link>
+          <a className="hdr-ico" href={telHref(phone)} aria-label={`Appeler le ${phone}`}><Phone /></a>
+          <Link href="/rendez-vous" className="btn btn-accent btn-sm hdr-pill">
             Rendez-vous
           </Link>
         </div>

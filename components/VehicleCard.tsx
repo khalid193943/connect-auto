@@ -2,7 +2,8 @@ import Link from 'next/link'
 import { ArrowUpRight } from 'lucide-react'
 import type { Vehicle } from '@/lib/types'
 import { eur, km, priceHT } from '@/lib/format'
-import { Slot, ILLUS } from './Slot'
+import { Slot } from './Slot'
+import { NoPhoto } from './NoPhoto'
 import { vehiclePicture } from '@/lib/vehicle-photos'
 
 export const vehicleHref = (v: Vehicle) => `/occasions/${v.category}/${v.slug}`
@@ -24,14 +25,11 @@ export function VehicleCard({ v, priority }: { v: Vehicle; priority?: boolean })
         {v.demo && <span className="tag ghost">Annonce exemple</span>}
       </div>
       {pic?.illustrative && <span className="illus-badge">Photo d’illustration</span>}
-      <Slot
-        src={pic?.src}
-        alt={`${vehicleName(v)} ${v.version} ${v.year}`}
-        sizes="(max-width: 640px) 90vw, (max-width: 1200px) 45vw, 25vw"
-        priority={priority}
-        illus={ILLUS[v.category]}
-        soon={pic ? undefined : 'Photos sur demande'}
-      />
+      {pic ? (
+        <Slot src={pic.src} alt={`${vehicleName(v)} ${v.version} ${v.year}`} sizes="(max-width: 640px) 90vw, (max-width: 1200px) 45vw, 25vw" priority={priority} />
+      ) : (
+        <div className="slot"><NoPhoto brand={v.brand} model={v.model} category={v.category} /></div>
+      )}
       <div className="veh-body">
         <div className="veh-title">
           <b>{vehicleName(v)}</b>

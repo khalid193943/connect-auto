@@ -2,9 +2,9 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { Slot, ILLUS } from './Slot'
+import { NoPhoto } from './NoPhoto'
 
-export function Gallery({ photos, alt, icon, refId, illustration }: { photos: string[]; alt: string; icon: string; refId: string; illustration?: string }) {
+export function Gallery({ photos, alt, icon, refId, illustration, brand = '', model = '' }: { photos: string[]; alt: string; icon: string; refId: string; illustration?: string; brand?: string; model?: string }) {
   const [i, setI] = useState(0)
   const n = photos.length
   const go = (d: number) => setI((x) => (x + d + n) % n)
@@ -21,7 +21,7 @@ export function Gallery({ photos, alt, icon, refId, illustration }: { photos: st
   if (!n) {
     return (
       <div className="gallery">
-        <div className="gallery-main"><Slot illus={ILLUS[icon]} alt={alt} soon="Photos à venir" id={refId} label="Photos à venir" /></div>
+        <div className="gallery-main"><NoPhoto brand={brand} model={model} category={icon} big /></div>
       </div>
     )
   }
