@@ -1,5 +1,6 @@
 'use server'
 import { revalidatePath } from 'next/cache'
+import { isStoredUrl } from '@/lib/blob'
 import { redirect } from 'next/navigation'
 import { get, list, newId, nextNumber, put, remove } from '@/lib/store'
 import { hashPassword, login, logout, requireManager, requireSession } from '@/lib/auth'
@@ -412,7 +413,7 @@ export async function setSlotImage(slot: string, url: string | null) {
   await requireSession()
   const s = await settings()
   const images = { ...s.images }
-  if (url && /^https:\/\//.test(url)) images[slot] = url
+  if (url && (isStoredUrl(url) || /^https:\/\//.test(url))) images[slot] = url
   else delete images[slot]
   await put('settings', { ...s, images })
   refreshSite()
@@ -423,7 +424,7 @@ export async function setBrandLogo(brand: string, url: string | null) {
   const s = await settings()
   const logos = { ...(s.brandLogos ?? {}) }
   const b = brand.trim().slice(0, 40)
-  if (url && /^https:\/\//.test(url)) logos[b] = url
+  if (url && (isStoredUrl(url) || /^https:\/\//.test(url))) logos[b] = url
   else delete logos[b]
   await put('settings', { ...s, brandLogos: logos })
   refreshSite()

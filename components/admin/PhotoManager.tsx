@@ -19,8 +19,8 @@ export function PhotoManager({ initial, enabled, name = 'photos' }: { initial: s
       try {
         const url = await uploadPhoto(list[i], 'vehicules', 'admin')
         setPhotos((p) => [...p, url])
-      } catch {
-        setErr('Une photo n’a pas pu être envoyée. Vérifiez la connexion et réessayez.')
+      } catch (e) {
+        setErr(`${list[i].name} : ${(e as Error).message}`)
       }
     }
     setBusy('')

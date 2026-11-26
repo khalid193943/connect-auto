@@ -1,5 +1,6 @@
 'use server'
 import { put, newId, get } from '@/lib/store'
+import { isStoredUrl } from '@/lib/blob'
 import type { Lead, RequestType } from '@/lib/types'
 
 export interface LeadInput {
@@ -38,7 +39,7 @@ export async function submitLead(input: LeadInput): Promise<{ ok: boolean; error
     }
   }
   const photos = (input.photos ?? [])
-    .filter((u) => typeof u === 'string' && /^https:\/\/[a-z0-9-]+\.public\.blob\.vercel-storage\.com\//i.test(u))
+    .filter((u) => isStoredUrl(u, 'reprise'))
     .slice(0, 10)
   const lead: Lead = {
     id: newId('l'),

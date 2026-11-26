@@ -9,7 +9,7 @@ import {
 
 const DB_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
 export const HAS_DB = DB_URL.length > 0
-export const HAS_BLOB = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
+export const HAS_BLOB = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID || process.env.BLOB_MOCK_DIR)
 
 const seedData = (): { [K in CollectionName]: Collections[K][] } => ({
   vehicles: SEED_VEHICLES,

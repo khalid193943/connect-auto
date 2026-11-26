@@ -1,6 +1,7 @@
 import { BookLock, DatabaseBackup, KeyRound, LogOut, Users } from 'lucide-react'
 import { requireSession } from '@/lib/auth'
 import { Hub } from '@/components/admin/Hub'
+import { BlobCheck } from '@/components/admin/BlobCheck'
 import { logoutAction } from '../../actions'
 
 export default async function Reglages() {
@@ -20,6 +21,7 @@ export default async function Reglages() {
           ...(manager ? [{ href: '/api/admin/export', icon: DatabaseBackup, t: 'Sauvegarde', d: 'Télécharger toutes les données', external: true }] : []),
         ]}
       />
+      <BlobCheck />
       <form action={logoutAction}><button className="b full ghost"><LogOut /> Se déconnecter</button></form>
     </main>
   )

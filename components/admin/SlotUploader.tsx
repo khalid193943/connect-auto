@@ -16,8 +16,8 @@ export function SlotUploader({ slot, url, enabled, brand }: { slot: string; url?
     try {
       const u = await uploadPhoto(f, brand ? 'marques' : 'site', 'admin', brand)
       await save(u)
-    } catch {
-      setErr('Envoi impossible')
+    } catch (e) {
+      setErr((e as Error).message || 'Envoi impossible')
     }
     setBusy(false)
   }
