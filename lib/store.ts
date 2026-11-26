@@ -3,6 +3,7 @@ import { neon } from '@neondatabase/serverless'
 import type { CollectionName, Collections, Vehicle } from './types'
 import {
   SEED_VERSION,
+  OLD_TEXTS,
   SEED_CLIENTS, SEED_DOCS, SEED_LEADS, SEED_PRICES, SEED_REVIEWS, SEED_SERVICES, SEED_SETTINGS, SEED_VEHICLES,
 } from './seed'
 
@@ -79,6 +80,15 @@ async function init() {
       }
     }
     for (const r of rows) if (r.data.demo && !SEED_VEHICLES.some((v) => v.id === r.id)) await sql`delete from ca_docs where col = 'vehicles' and id = ${r.id}`
+    const st = (await sql`select data from ca_docs where col = 'settings' and id = 'site'`) as { data: Record<string, unknown> }[]
+    if (st[0]) {
+      const cur = { ...st[0].data }
+      let changed = false
+      for (const [k, oldText] of Object.entries(OLD_TEXTS)) {
+        if (cur[k] === oldText) { cur[k] = (SEED_SETTINGS as unknown as Record<string, unknown>)[k]; changed = true }
+      }
+      if (changed) await sql`update ca_docs set data = ${JSON.stringify(cur)}::jsonb, updated_at = now() where col = 'settings' and id = 'site'`
+    }
     await sql`insert into ca_docs (col, id, data) values ('meta', 'seed', ${JSON.stringify({ version: SEED_VERSION })}::jsonb)
       on conflict (col, id) do update set data = excluded.data, updated_at = now()`
   }

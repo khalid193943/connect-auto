@@ -3,6 +3,7 @@ import { ArrowUpRight } from 'lucide-react'
 import type { Vehicle } from '@/lib/types'
 import { eur, km, priceHT } from '@/lib/format'
 import { Slot, ILLUS } from './Slot'
+import { vehiclePicture } from '@/lib/vehicle-photos'
 
 export const vehicleHref = (v: Vehicle) => `/occasions/${v.category}/${v.slug}`
 export const vehicleName = (v: Vehicle) => `${v.brand} ${v.model}`
@@ -14,6 +15,7 @@ export function StatusTag({ v }: { v: Vehicle }) {
 }
 
 export function VehicleCard({ v, priority }: { v: Vehicle; priority?: boolean }) {
+  const pic = vehiclePicture(v)
   return (
     <Link href={vehicleHref(v)} className="veh">
       <div className="veh-tags">
@@ -21,13 +23,14 @@ export function VehicleCard({ v, priority }: { v: Vehicle; priority?: boolean })
         {v.vatRecoverable && v.status === 'disponible' && <span className="tag green">TVA récupérable</span>}
         {v.demo && <span className="tag ghost">Annonce exemple</span>}
       </div>
+      {pic?.illustrative && <span className="illus-badge">Photo d’illustration</span>}
       <Slot
-        src={v.photos[0]}
+        src={pic?.src}
         alt={`${vehicleName(v)} ${v.version} ${v.year}`}
         sizes="(max-width: 640px) 90vw, (max-width: 1200px) 45vw, 25vw"
         priority={priority}
         illus={ILLUS[v.category]}
-        soon={v.photos.length ? undefined : 'Photos à venir'}
+        soon={pic ? undefined : 'Photos sur demande'}
       />
       <div className="veh-body">
         <div className="veh-title">

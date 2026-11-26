@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, ArrowUpRight, MessageCircle } from 'lucide-react
 import type { Vehicle } from '@/lib/types'
 import { eur, km, priceHT, waHref } from '@/lib/format'
 import { ILLUS } from './Slot'
+import { vehiclePicture } from '@/lib/vehicle-photos'
 
 const CAT: Record<string, string> = { voitures: 'Voiture', utilitaires: 'Utilitaire', camions: 'Camion', motos: 'Moto' }
 
@@ -32,6 +33,7 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
   if (!n) return null
   const v = vehicles[i]
   const href = `/occasions/${v.category}/${v.slug}`
+  const pic = vehiclePicture(v)
 
   return (
     <div
@@ -64,9 +66,9 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
         >
           <span className="sr-bigname" aria-hidden key={'n' + v.id}>{v.model}</span>
           <span className="sr-spot" aria-hidden />
-          <div className="sr-visual" key={'v' + v.id}>
-            {v.photos[0] ? (
-              <Image src={v.photos[0]} alt={`${v.brand} ${v.model} ${v.version}`} fill sizes="(max-width: 1000px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
+          <div className={`sr-visual ${pic ? 'has-photo' : ''}`} key={'v' + v.id}>
+            {pic ? (
+              <Image src={pic.src} alt={`${v.brand} ${v.model} ${v.version}`} fill sizes="(max-width: 1000px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
             ) : (
               <>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -79,7 +81,8 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
           <span className="sr-tags">
             <span className="tag">{CAT[v.category]}</span>
             {v.vatRecoverable && <span className="tag green">TVA récupérable</span>}
-            {!v.photos[0] && <span className="tag ghost">Photos à venir</span>}
+            {pic?.illustrative && <span className="tag ghost">Photo d’illustration</span>}
+            {!pic && <span className="tag ghost">Photos sur demande</span>}
           </span>
           <span className="sr-open" aria-hidden><ArrowUpRight /></span>
         </Link>
@@ -113,8 +116,8 @@ export function Showroom({ vehicles, whatsapp }: { vehicles: Vehicle[]; whatsapp
         {vehicles.map((x, k) => (
           <button key={x.id} className={`sr-thumb ${k === i ? 'on' : ''}`} onClick={() => setI(k)} aria-label={`${x.brand} ${x.model}, ${eur(x.price)}`} aria-current={k === i}>
             <span className="sr-thumb-img">
-              {x.photos[0] ? (
-                <Image src={x.photos[0]} alt="" fill sizes="160px" style={{ objectFit: 'cover' }} />
+              {vehiclePicture(x) ? (
+                <Image src={vehiclePicture(x)!.src} alt="" fill sizes="160px" style={{ objectFit: 'cover' }} />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={`/illus/${ILLUS[x.category]}.svg`} alt="" />

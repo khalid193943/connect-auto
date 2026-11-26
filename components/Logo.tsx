@@ -20,9 +20,9 @@ export function LogoWord({ className, id = 'lw' }: { className?: string; id?: st
         </linearGradient>
       </defs>
       <g transform={W.transform}>
-        <path d={W.connect} fill={`url(#${id}w)`} fillRule="evenodd" />
-        <path d={W.auto} fill={`url(#${id}a)`} fillRule="evenodd" />
-        <circle cx={W.hub[0]} cy={W.hub[1]} r="11" fill="#2EC95C" />
+        <path className="lw-connect" d={W.connect} fill={`url(#${id}w)`} fillRule="evenodd" />
+        <path className="lw-auto" d={W.auto} fill={`url(#${id}a)`} fillRule="evenodd" />
+        <circle className="lw-hub" cx={W.hub[0]} cy={W.hub[1]} r="11" fill="#2EC95C" />
       </g>
     </svg>
   )

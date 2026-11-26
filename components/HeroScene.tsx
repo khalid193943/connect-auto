@@ -8,7 +8,7 @@ import { Stars } from './icons'
 import { OpenStatus } from './OpenStatus'
 
 /** Sol en perspective (lignes qui fuient vers l’horizon). */
-function Floor() {
+export function Floor() {
   const W = 1600, H = 520, vx = 1050
   const rays = Array.from({ length: 29 }, (_, i) => -1400 + i * 140)
   const rows = Array.from({ length: 11 }, (_, i) => Math.pow(i / 10, 2.1) * H)

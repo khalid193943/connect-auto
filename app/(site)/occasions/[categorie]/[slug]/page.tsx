@@ -12,6 +12,7 @@ import { StatusTag, VehicleCard, vehicleHref } from '@/components/VehicleCard'
 import { JsonLd } from '@/components/JsonLd'
 import { IconHandshake, IconShield, IconWrench } from '@/components/icons'
 import { HAS_BLOB } from '@/lib/store'
+import { vehiclePicture } from '@/lib/vehicle-photos'
 
 type Params = { params: Promise<{ categorie: string; slug: string }> }
 
@@ -71,7 +72,7 @@ export default async function VehiclePage({ params }: Params) {
       <section className="wrap" style={{ marginTop: 'calc(-1 * clamp(40px, 5vw, 80px))', paddingBottom: 'clamp(60px,7vw,120px)' }}>
         <div className="vd">
           <div style={{ display: 'grid', gap: 'clamp(28px,3vw,48px)' }}>
-            <Gallery photos={v.photos} alt={`${name} ${v.version}`} icon={v.category} refId={v.ref} />
+            <Gallery photos={v.photos} alt={`${name} ${v.version}`} icon={v.category} refId={v.ref} illustration={vehiclePicture(v)?.illustrative ? vehiclePicture(v)!.src : undefined} />
             <div>
               <h2 className="eyebrow">Caractéristiques</h2>
               <div className="spec-grid">

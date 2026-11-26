@@ -20,16 +20,16 @@ export const SEED_SETTINGS: Settings = {
     '5': [['08:30', '12:30'], ['14:30', '18:00']],
     '6': [['08:30', '15:00']],
   },
-  heroEyebrow: 'Garage & véhicules d’occasion · Milhaud, près de Nîmes',
-  heroLine1: 'Votre véhicule.',
-  heroLine2: 'Notre métier.',
+  heroEyebrow: 'Garage & occasions · Milhaud, à 10 min de Nîmes',
+  heroLine1: 'Achetez malin.',
+  heroLine2: 'Roulez serein.',
   heroText:
-    'Achat, vente et reprise de voitures, utilitaires, camions et motos d’occasion. Entretien, mécanique, carrosserie et pneus dans notre atelier de la route de Nîmes.',
-  aboutTitle: 'Un garage indépendant, un seul interlocuteur',
+    'Voitures, utilitaires, camions et motos d’occasion. Reprise de votre véhicule. Atelier toutes marques. Tout au même endroit, route de Nîmes.',
+  aboutTitle: 'Un seul garage. Zéro casse-tête.',
   aboutText:
-    'Connect Auto est un garage indépendant installé depuis 2019 au 1520 route de Nîmes, à Milhaud. Ici, la même équipe vend, reprend, entretient et répare votre véhicule : vous savez à qui vous parlez, du premier appel à la remise des clés.',
+    'Depuis 2019, la même équipe vend, reprend, entretient et répare votre véhicule. Un seul interlocuteur, et un prix annoncé avant chaque intervention.',
   repriseText:
-    'Vous changez de véhicule ou vous voulez simplement vendre le vôtre ? Envoyez quelques photos et les informations principales : nous vous rappelons avec une proposition.',
+    'Quelques photos, deux minutes, et on vous rappelle avec une proposition. Paiement et papiers : on s’occupe de tout.',
   announcement: '',
   announcementOn: false,
   googleRating: 4.3,
@@ -92,7 +92,10 @@ const LBC_MILHAUD = 'https://www.leboncoin.fr/cl/utilitaires/cp_milhaud_30540'
 const NOT_ON_LEBONCOIN = new Set(['v13', 'v14', 'v15', 'v17', 'v18', 'v19', 'v21', 'v23', 'v24'])
 
 /** À augmenter quand le stock de départ change : les véhicules jamais modifiés dans l’admin sont alors mis à jour. */
-export const SEED_VERSION = 3
+export const SEED_VERSION = 4
+
+/** Anciens textes par défaut : remplacés par les nouveaux s’ils n’ont pas été modifiés dans l’admin. */
+export const OLD_TEXTS: Record<string, string> = {"heroEyebrow": "Garage & véhicules d’occasion · Milhaud, près de Nîmes", "heroLine1": "Votre véhicule.", "heroLine2": "Notre métier.", "heroText": "Achat, vente et reprise de voitures, utilitaires, camions et motos d’occasion. Entretien, mécanique, carrosserie et pneus dans notre atelier de la route de Nîmes.", "aboutTitle": "Un garage indépendant, un seul interlocuteur", "aboutText": "Connect Auto est un garage indépendant installé depuis 2019 au 1520 route de Nîmes, à Milhaud. Ici, la même équipe vend, reprend, entretient et répare votre véhicule : vous savez à qui vous parlez, du premier appel à la remise des clés.", "repriseText": "Vous changez de véhicule ou vous voulez simplement vendre le vôtre ? Envoyez quelques photos et les informations principales : nous vous rappelons avec une proposition."}
 
 /**
  * Stock réel de Connect Auto, repris le 26 novembre 2026 de la boutique leboncoin (1192039, 18 annonces)

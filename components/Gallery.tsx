@@ -4,10 +4,20 @@ import { useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { Slot, ILLUS } from './Slot'
 
-export function Gallery({ photos, alt, icon, refId }: { photos: string[]; alt: string; icon: string; refId: string }) {
+export function Gallery({ photos, alt, icon, refId, illustration }: { photos: string[]; alt: string; icon: string; refId: string; illustration?: string }) {
   const [i, setI] = useState(0)
   const n = photos.length
   const go = (d: number) => setI((x) => (x + d + n) % n)
+  if (!n && illustration) {
+    return (
+      <div className="gallery">
+        <div className="gallery-main">
+          <Image src={illustration} alt={`${alt} (photo d’illustration)`} fill priority sizes="(max-width: 1050px) 100vw, 60vw" style={{ objectFit: 'cover' }} />
+          <span className="illus-badge big">Photo d’illustration · photos réelles du véhicule sur demande</span>
+        </div>
+      </div>
+    )
+  }
   if (!n) {
     return (
       <div className="gallery">

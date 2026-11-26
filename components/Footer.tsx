@@ -4,6 +4,7 @@ import type { Service, Settings } from '@/lib/types'
 import { CATEGORIES, DAYS, DAY_ORDER, NEARBY } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
 import { fmtDay } from '@/lib/hours'
+import { LogoWord } from './Logo'
 
 export function Footer({ s, services }: { s: Settings; services: Service[] }) {
   const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`Connect Auto ${s.street} ${s.zip} ${s.city}`)}`
@@ -61,7 +62,7 @@ export function Footer({ s, services }: { s: Settings; services: Service[] }) {
         Connect Auto accueille les automobilistes et les professionnels de {NEARBY.slice(0, 12).join(', ')} et de tout le Gard :
         voitures, utilitaires, camions et motos d’occasion, reprise de véhicules, entretien et réparation toutes marques.
       </p>
-      <div className="ftr-big" aria-hidden>Connect Auto</div>
+      <div className="ftr-logo" aria-hidden><LogoWord id="ftrlogo" /></div>
       <div className="ftr-bottom">
         <span>© {new Date().getFullYear()} {s.legal.company} · SIRET {s.legal.siret}</span>
         <nav aria-label="Informations légales">

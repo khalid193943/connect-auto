@@ -51,17 +51,27 @@ export const LOCAL_IMAGES: Record<string, string> = {
   'IMG-11': '/images/svc-depannage.webp',
   'IMG-12': '/images/svc-cartegrise.webp',
   'IMG-13': '/images/cat-utilitaires.webp',
+  'IMG-14': '/images/ba-avant.webp',
+  'IMG-15': '/images/ba-apres.webp',
   'IMG-16': '/images/reprise.webp',
-  'IMG-17': '/images/ban-entretien.webp',
-  'IMG-24-1': '/images/ban-entretien.webp',
-  'IMG-24-2': '/images/ban-mecanique.webp',
-  'IMG-24-3': '/images/ban-pneus.webp',
+  'IMG-17': '/images/atelier.webp',
+  'IMG-18': '/images/reprise.webp',
+  'IMG-19': '/images/detail-freinage.webp',
+  'IMG-20': '/images/atelier.webp',
+  'IMG-21': '/images/svc-cartegrise.webp',
+  'IMG-22': '/images/reprise.webp',
+  'IMG-24-1': '/images/svc-entretien.webp',
+  'IMG-24-2': '/images/detail-freinage.webp',
+  'IMG-24-3': '/images/svc-pneus.webp',
   'IMG-24-4': '/images/ban-carrosserie.webp',
-  'IMG-24-5': '/images/ban-parebrise.webp',
-  'IMG-24-6': '/images/ban-depannage.webp',
+  'IMG-24-5': '/images/svc-parebrise.webp',
+  'IMG-24-6': '/images/svc-depannage.webp',
   'IMG-24-7': '/images/svc-cartegrise.webp',
   'IMG-24-8': '/images/cat-utilitaires.webp',
 }
+
+/** Emplacements dont la photo d’ambiance est une image d’illustration (à remplacer par une vraie photo). */
+export const ILLUSTRATIVE = new Set(['IMG-14', 'IMG-15'])
 
 export const slotSrc = (images: Record<string, string> | undefined, id: string): string | undefined =>
   images?.[id] || LOCAL_IMAGES[id]
