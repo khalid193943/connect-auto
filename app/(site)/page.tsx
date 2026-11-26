@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, CalendarCheck, Clock, MapPin, Phone, Wrench } from 'lucide-react'
-import { getServices, getSettings, getVehicles } from '@/lib/data'
+import { getReviews, getServices, getSettings, getVehicles } from '@/lib/data'
 import { CATEGORIES } from '@/lib/site'
 import { slotSrc } from '@/lib/images'
 import { telHref } from '@/lib/format'
@@ -12,7 +12,7 @@ import { OpenStatus } from '@/components/OpenStatus'
 import { SERVICE_ICONS, Stars, IconHandshake } from '@/components/icons'
 
 export default async function Home() {
-  const [s, services, vehicles] = await Promise.all([getSettings(), getServices(), getVehicles()])
+  const [s, services, vehicles, reviews] = await Promise.all([getSettings(), getServices(), getVehicles(), getReviews()])
   const img = s.images
   const available = vehicles.filter((v) => v.status !== 'vendu')
   const featured = [...available.filter((v) => v.featured), ...available.filter((v) => !v.featured)].slice(0, 12)
@@ -126,7 +126,7 @@ export default async function Home() {
           <span className="duo-ico"><IconHandshake /></span>
           <span className="duo-txt">
             <b>Reprise de votre véhicule</b>
-            <span>Quelques photos, une proposition rapide. Paiement et papiers : on s’occupe de tout.</span>
+            <span>{s.repriseText}</span>
           </span>
           <span className="duo-img"><Image src={slotSrc(img, 'IMG-16') ?? '/images/reprise.webp'} alt="" fill sizes="30vw" style={{ objectFit: 'cover' }} /></span>
           <span className="duo-go"><ArrowRight /></span>
@@ -141,6 +141,25 @@ export default async function Home() {
           <span className="duo-go"><ArrowRight /></span>
         </Link>
       </section>
+
+      {/* ============ AVIS (ajoutés depuis l’admin) ============ */}
+      {reviews.length > 0 && (
+        <section className="s6 wrap" aria-labelledby="rev-title">
+          <div className="s6-head">
+            <h2 id="rev-title" className="t6">Ils nous font <span>confiance</span></h2>
+            <a href={s.googleUrl} target="_blank" rel="noopener" className="link-arrow">Tous les avis Google <ArrowRight /></a>
+          </div>
+          <div className="rev6">
+            {reviews.slice(0, 3).map((r) => (
+              <article key={r.id} className="rev6-card">
+                <Stars value={r.rating} />
+                <p>« {r.text} »</p>
+                <b>{r.author}</b>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ============ INFOS PRATIQUES ============ */}
       <section className="s6 wrap" aria-label="Infos pratiques">

@@ -7,7 +7,8 @@ import { JsonLd } from '@/components/JsonLd'
 import { getServices, getSettings } from '@/lib/data'
 import { businessSchema } from '@/lib/schema'
 
-export const revalidate = 300
+/** Pages toujours à jour : chaque modification faite dans l’admin est visible immédiatement. */
+export const dynamic = 'force-dynamic'
 
 export default async function SiteLayout({ children }: { children: React.ReactNode }) {
   const [s, services] = await Promise.all([getSettings(), getServices()])

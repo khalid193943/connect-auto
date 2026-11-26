@@ -30,7 +30,7 @@ export default async function About() {
           <div className="stack prose" style={{ alignSelf: 'center' }}>
             <p className="eyebrow">Notre façon de travailler</p>
             <h2 className="display h2" style={{ fontSize: 'clamp(30px,3.4vw,60px)', margin: 0, fontStyle: 'italic', textTransform: 'uppercase' }}>
-              Simple, <span className="accent">direct</span>, carré
+              {s.aboutTitle}
             </h2>
             <p>
               Connect Auto est une société créée en avril 2019 et installée au 1520 route de Nîmes, à Milhaud. Le garage réunit sous un même toit la vente

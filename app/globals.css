@@ -1273,3 +1273,10 @@ button.hdr-ico { background: transparent; border: 0; cursor: pointer; padding: 0
 .h6-search label { min-width: 0; }
 .h6-search select { width: 100%; }
 @media (max-width: 900px) { .h6-search { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.rev6 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.rev6-card { display: grid; gap: 12px; align-content: start; padding: 22px; border-radius: var(--r); background: #1d1f23; border: 1px solid var(--glass-line); }
+.rev6-card p { margin: 0; color: #d3d8dd; font-size: 15px; line-height: 1.6; }
+.rev6-card b { font-size: 14px; }
+html[data-theme='light'] .rev6-card { background: #fff; border-color: var(--line); }
+html[data-theme='light'] .rev6-card p { color: #2b3138; }
+@media (max-width: 900px) { .rev6 { grid-template-columns: 1fr; } }
