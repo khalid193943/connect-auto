@@ -2,6 +2,9 @@ import type { Metadata, Viewport } from 'next'
 import '@fontsource-variable/archivo/wdth.css'
 import '@fontsource-variable/archivo/wdth-italic.css'
 import '@fontsource-variable/dm-sans/opsz.css'
+import '@fontsource-variable/sora/wght.css'
+import '@fontsource/instrument-serif/400.css'
+import '@fontsource/instrument-serif/400-italic.css'
 import './globals.css'
 import { SITE_URL, INDEXABLE } from '@/lib/site'
 
@@ -16,7 +19,7 @@ export const metadata: Metadata = {
   formatDetection: { telephone: false },
 }
 
-export const viewport: Viewport = { themeColor: '#07090C', width: 'device-width', initialScale: 1, viewportFit: 'cover' }
+export const viewport: Viewport = { themeColor: '#11151B', width: 'device-width', initialScale: 1, viewportFit: 'cover' }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

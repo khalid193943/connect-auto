@@ -6,7 +6,7 @@ import { Slot, ILLUS } from '@/components/Slot'
 import { HeroScene } from '@/components/HeroScene'
 import { BrandStrip } from '@/components/BrandStrip'
 import { ServiceCard } from '@/components/ServiceCard'
-import { VehicleCard } from '@/components/VehicleCard'
+import { Showroom } from '@/components/Showroom'
 import { BeforeAfter } from '@/components/BeforeAfter'
 import { LeadForm } from '@/components/LeadForm'
 import { Stars, IconAccess, IconHandshake, IconShield, IconVan } from '@/components/icons'
@@ -17,7 +17,7 @@ import { dateFr } from '@/lib/format'
 export default async function Home() {
   const [s, services, vehicles, reviews] = await Promise.all([getSettings(), getServices(), getVehicles(), getReviews()])
   const img = s.images
-  const featured = [...vehicles.filter((v) => v.featured && v.status !== 'vendu'), ...vehicles.filter((v) => !v.featured && v.status !== 'vendu')].slice(0, 8)
+  const featured = [...vehicles.filter((v) => v.featured && v.status !== 'vendu'), ...vehicles.filter((v) => !v.featured && v.status !== 'vendu')].slice(0, 10)
   const count = (c: string) => vehicles.filter((v) => v.category === c && v.status !== 'vendu').length
   const brands = [...new Set(['Renault', 'Peugeot', 'Citroën', 'Volkswagen', 'Fiat', 'Ford', 'Mercedes-Benz', 'Iveco', 'Dacia', 'Toyota', 'Nissan', 'Opel', 'Yamaha', 'Honda', 'Kawasaki', 'BMW', ...vehicles.map((v) => v.brand)])]
 
@@ -130,15 +130,15 @@ export default async function Home() {
           <div className="sec-head" data-reveal>
             <div>
               <p className="eyebrow">Arrivages</p>
-              <h2 id="stock-title" className="display h2">En ce moment <span className="accent">au garage</span></h2>
+              <h2 id="stock-title" className="display h2">Le showroom, <span className="accent">en ce moment</span></h2>
             </div>
             <div style={{ display: 'grid', gap: 22, justifyItems: 'end' }}>
               <p className="lead">Prix affichés TTC. Pour les utilitaires éligibles, le prix HT est indiqué et la TVA est récupérable.</p>
               <Link href="/occasions" className="link-arrow">Tout le stock ({vehicles.filter((v) => v.status !== 'vendu').length}) <ArrowRight /></Link>
             </div>
           </div>
-          <div className="veh-row" data-reveal>
-            {featured.map((v) => <VehicleCard key={v.id} v={v} />)}
+          <div data-reveal>
+            <Showroom vehicles={featured} whatsapp={s.whatsapp} />
           </div>
         </div>
       </section>
