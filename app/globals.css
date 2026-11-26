@@ -1269,3 +1269,7 @@ html[data-theme='light'] .scrim { background: rgba(0,0,0,.35); }
 html[data-theme='light'] .ftr .btn:not(.btn-accent) { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); color: #f4f6f8; }
 html[data-theme='light'] .fullband .btn:not(.btn-accent):not(.btn-light) { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); color: #f4f6f8; }
 html[data-theme='light'] .page-hero.with-img .crumbs, html[data-theme='light'] .page-hero.with-img .lead { color: #d0d6dc; }
+button.hdr-ico { background: transparent; border: 0; cursor: pointer; padding: 0; }
+.h6-search label { min-width: 0; }
+.h6-search select { width: 100%; }
+@media (max-width: 900px) { .h6-search { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
