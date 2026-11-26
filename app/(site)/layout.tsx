@@ -1,5 +1,6 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { BrandCarousel } from '@/components/BrandCarousel'
 import { MobileBar } from '@/components/MobileBar'
 import { RevealObserver } from '@/components/Reveal'
 import { IntroGate, INTRO_SCRIPT } from '@/components/IntroGate'
@@ -21,6 +22,7 @@ export default async function SiteLayout({ children }: { children: React.ReactNo
       {announce && <div className="announce" role="note">{s.announcement}</div>}
       <Header phone={s.phone} whatsapp={s.whatsapp} />
       <main id="contenu">{children}</main>
+      <BrandCarousel logos={s.brandLogos ?? {}} />
       <Footer s={s} services={services} />
       <MobileBar phone={s.phone} whatsapp={s.whatsapp} />
       <IntroGate />

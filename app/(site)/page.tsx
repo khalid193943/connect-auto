@@ -7,7 +7,6 @@ import { slotSrc } from '@/lib/images'
 import { telHref } from '@/lib/format'
 import { VehicleCard } from '@/components/VehicleCard'
 import { CardRail } from '@/components/CardRail'
-import { BrandStrip } from '@/components/BrandStrip'
 import { OpenStatus } from '@/components/OpenStatus'
 import { SERVICE_ICONS, Stars, IconHandshake } from '@/components/icons'
 
@@ -18,7 +17,6 @@ export default async function Home() {
   const featured = [...available.filter((v) => v.featured), ...available.filter((v) => !v.featured)].slice(0, 12)
   const count = (c: string) => available.filter((v) => v.category === c).length
   const rating = String(s.googleRating).replace('.', ',')
-  const brands = [...new Set(['Renault', 'Peugeot', 'Citroën', 'Volkswagen', 'Fiat', 'Ford', 'Mercedes-Benz', 'Iveco', 'Nissan', 'Opel', 'Toyota', 'Dacia', ...vehicles.map((v) => v.brand)])]
   const heroImg = slotSrc(img, 'IMG-01') ?? '/images/hero-studio.webp'
 
   return (
@@ -184,7 +182,6 @@ export default async function Home() {
         </div>
       </section>
 
-      <BrandStrip brands={brands} logos={s.brandLogos ?? {}} />
     </>
   )
 }

@@ -1383,3 +1383,26 @@ html[data-theme='light'] .hdr .logo1, html[data-theme='light'] .menu .logo1 { --
   19%, 23%, 60% { opacity: .22; filter: none; }
 }
 @media (prefers-reduced-motion: reduce) { .ftr-logo .l1-auto { animation: none; } }
+
+/* ---------- Carrousel des marques (toutes les pages) ---------- */
+.bcar { border-top: 1px solid var(--line); background: var(--bg-2); padding: clamp(26px, 3vw, 40px) 0 clamp(30px, 3.4vw, 46px); display: grid; gap: 22px; overflow: hidden; }
+.bcar-head { display: flex; align-items: baseline; justify-content: center; gap: 14px; flex-wrap: wrap; padding: 0 var(--pad); text-align: center; }
+.bcar-head p { margin: 0; font: 800 13px/1 var(--font-display); letter-spacing: .26em; text-transform: uppercase; color: var(--text); }
+.bcar-head span { font-size: 13px; color: var(--dim); letter-spacing: .04em; }
+.bcar-view { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.bcar-track { list-style: none; margin: 0; padding: 0; display: flex; width: max-content; gap: clamp(14px, 1.6vw, 22px); animation: bcarRun 55s linear infinite; }
+.bcar:hover .bcar-track { animation-play-state: paused; }
+.bcar-item { display: grid; justify-items: center; align-content: center; gap: 10px; width: 132px; height: 108px; border-radius: 14px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); transition: color .25s, border-color .25s, transform .25s; }
+.bcar-item:hover { color: var(--text); border-color: rgba(46,201,92,.45); transform: translateY(-2px); }
+.bcar-logo { width: 62px; height: 39px; display: block; }
+.bcar-img { width: 66px; height: 40px; object-fit: contain; filter: brightness(0) invert(.85); }
+html[data-theme='light'] .bcar-img { filter: brightness(0) opacity(.75); }
+.bcar-item span { font: 600 11.5px/1 var(--font-display); letter-spacing: .06em; color: var(--dim); white-space: nowrap; }
+.bcar-item:hover span { color: var(--accent); }
+@keyframes bcarRun { to { transform: translateX(calc(-50% - clamp(7px, .8vw, 11px))); } }
+@media (max-width: 640px) { .bcar-item { width: 112px; height: 94px; } .bcar-logo { width: 54px; height: 34px; } .bcar-track { animation-duration: 42s; } }
+@media (prefers-reduced-motion: reduce) { .bcar-track { animation: none; flex-wrap: wrap; justify-content: center; width: auto; } .bcar-item[aria-hidden] { display: none; } }
+.bcar-item { color: #c3cad3; }
+html[data-theme='light'] .bcar-item { color: #3b434c; }
+.bcar { grid-template-columns: minmax(0, 1fr); }
+.bcar-view { min-width: 0; overflow: hidden; }
