@@ -1,62 +1,41 @@
 'use client'
 import { useEffect } from 'react'
-import anim from '@/lib/brand/car-anim.json'
-import logo from '@/lib/brand/logo.json'
-import { LogoWord } from './Logo'
+import v1 from '@/lib/brand/logo-v1.json'
 
-const INK = '#F4F6F8'
-const ACC = '#2EC95C'
-const H = logo.meta.span[1]
-const [hx, hy] = logo.meta.head
-
-/** La voiture du logo se dessine, allume ses phares, tourne au ralenti puis démarre. */
+/** Le logo officiel s’écrit : la silhouette apparaît, le feu arrière s’allume, le nom suit, puis la voiture file. */
 export default function IntroLoader({ onReady, onDone }: { onReady: () => void; onDone: () => void }) {
   useEffect(() => {
     onReady()
-    const t = window.setTimeout(onDone, 3400)
+    const t = window.setTimeout(onDone, 3300)
     return () => window.clearTimeout(t)
   }, [onReady, onDone])
 
-  const item = (it: { d: string; f: boolean; w?: number }, i: number) =>
-    it.f ? <path key={i} d={it.d} fill={INK} /> : <path key={i} d={it.d} fill="none" stroke={INK} strokeWidth={it.w} />
-
   return (
     <div className="intro" onClick={onDone} role="presentation">
-      <div className="intro-stage">
-        <svg className="intro-car" viewBox={`-60 -30 1120 ${H + 60}`} aria-hidden>
-          <defs>
-            <radialGradient id="ibeam" cx=".5" cy=".5" r=".5">
-              <stop offset="0" stopColor="#fff" stopOpacity=".95" />
-              <stop offset=".35" stopColor="#eaf6ff" stopOpacity=".35" />
-              <stop offset="1" stopColor="#eaf6ff" stopOpacity="0" />
-            </radialGradient>
-            <filter id="iglow" x="-20%" y="-60%" width="140%" height="220%">
-              <feGaussianBlur stdDeviation="6" result="b" />
-              <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-          </defs>
-          <g className="idle">
-            <g>
-              {anim.draw.map((p, i) => (
-                <path key={i} className="ln" d={p.d} pathLength={1} stroke={p.a ? ACC : INK} style={{ ['--i' as string]: i }} />
-              ))}
-            </g>
-            <g className="fl">
-              {anim.fills.map(item)}
-              <g className="spin">{anim.spinF.map(item)}</g>
-              <g className="spin">{anim.spinR.map(item)}</g>
-            </g>
-            <g className="glow" filter="url(#iglow)">
-              {anim.acc.map((d, i) => <path key={i} d={d} fill={ACC} />)}
-            </g>
-            <g className="beam">
-              <ellipse cx={hx - 120} cy={hy + 10} rx="190" ry="44" fill="url(#ibeam)" />
-              <ellipse cx={hx} cy={hy} rx="30" ry="10" fill="url(#ibeam)" />
-            </g>
+      <svg className="intro-logo" viewBox={v1.vb} aria-hidden>
+        <defs>
+          <linearGradient id="it" x1="744" y1="0" x2="880" y2="0" gradientUnits="userSpaceOnUse">
+            <stop offset="0" stopColor="#2EC95C" stopOpacity="0" />
+            <stop offset=".35" stopColor="#2EC95C" />
+            <stop offset="1" stopColor="#8AE3A5" />
+          </linearGradient>
+          <filter id="ig" x="-30%" y="-300%" width="160%" height="700%">
+            <feGaussianBlur stdDeviation="6" result="b" />
+            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
+          </filter>
+          <clipPath id="iclip"><rect className="i-wipe" x="130" y="120" width="780" height="160" /></clipPath>
+        </defs>
+        <g className="i-car">
+          <g clipPath="url(#iclip)">
+            <path d={v1.roof} fill="#F4F6F8" />
+            <path d={v1.shoulder} fill="#F4F6F8" opacity=".9" />
+            <path d={v1.nose} fill="#F4F6F8" opacity=".75" />
           </g>
-        </svg>
-        <LogoWord className="intro-word" id="introword" />
-      </div>
+          <path className="i-tail" d={v1.tail} fill="url(#it)" filter="url(#ig)" />
+        </g>
+        <path className="i-word" d={v1.word} fill="#F4F6F8" />
+        <path className="i-tag" d={v1.tag} fill="#2EC95C" />
+      </svg>
       <div className="intro-bar"><i /></div>
       <button className="intro-skip-btn" onClick={onDone}>Passer</button>
     </div>

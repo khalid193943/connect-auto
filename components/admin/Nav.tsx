@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Car, ExternalLink, FileText, Home, Inbox, MonitorSmartphone, Settings } from 'lucide-react'
-import { LogoLockup } from '@/components/Logo'
+import { Logo } from '@/components/Logo'
 
 const SITE = ['/admin/site', '/admin/textes', '/admin/services', '/admin/tarifs', '/admin/photos', '/admin/avis', '/admin/marques']
 const DOCS = ['/admin/documents', '/admin/clients']
@@ -23,7 +23,7 @@ export function AdminNav({ newLeads, name, role, demo }: { newLeads: number; nam
   return (
     <>
       <aside className="side" aria-label="Menu de l’espace garage">
-        <Link href="/admin" className="side-logo" aria-label="Accueil de l’espace garage"><LogoLockup id="sidelogo" /></Link>
+        <Link href="/admin" className="side-logo" aria-label="Accueil de l’espace garage"><Logo id="sidelogo" /></Link>
         {demo && <span className="side-demo">Démo · rien n’est enregistré</span>}
         <nav className="side-nav">
           {items.map((t) => (
@@ -45,7 +45,7 @@ export function AdminNav({ newLeads, name, role, demo }: { newLeads: number; nam
       </aside>
 
       <header className="mtop">
-        <Link href="/admin" className="mtop-logo" aria-label="Accueil"><LogoLockup id="mtoplogo" /></Link>
+        <Link href="/admin" className="mtop-logo" aria-label="Accueil"><Logo id="mtoplogo" /></Link>
         {demo && <span className="mtop-demo">Démo</span>}
         <Link href="/admin/reglages" className={`av ${under(SETTINGS) ? 'on' : ''}`} aria-label="Réglages et compte">{initial}</Link>
       </header>

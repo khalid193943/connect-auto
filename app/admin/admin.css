@@ -320,3 +320,7 @@
 }
 @media (max-width: 360px) { .kpi-tx i { display: none; } }
 @media (min-width: 1024px) { .adm-main { margin: 0; } }
+/* Logo officiel dans l'admin */
+.side-logo { width: 196px; margin: 4px 8px 16px; }
+.mtop-logo { width: 136px; }
+.login-logo { width: min(300px, 72vw); }

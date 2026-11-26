@@ -1348,3 +1348,30 @@ html[data-theme='light'] .hdr .lw-connect, html[data-theme='light'] .menu .lw-co
   .bw-step-img { aspect-ratio: auto; height: 100%; }
   .bw-dot { width: 26px; height: 26px; margin: -13px 0 0 -13px; font-size: 12px; }
 }
+
+/* ==========================================================================
+   Logo officiel (version « Ligne »)
+   ========================================================================== */
+.logo1 { display: block; width: 100%; height: auto; overflow: visible; }
+.logo1 .l1-ink { fill: var(--l1-ink, #F4F6F8); }
+.logo1 .l1-acc { fill: var(--l1-acc, #2EC95C); }
+html[data-theme='light'] .hdr .logo1, html[data-theme='light'] .menu .logo1 { --l1-ink: #15181C; --l1-acc: #1E9E46; }
+.hdr-logo { width: clamp(190px, 15vw, 236px); }
+@media (max-width: 640px) { .hdr-logo { width: 168px; } }
+.ftr-logo { max-width: 820px; margin-inline: auto; }
+.ftr-logo .l1-tail { animation: tailPulse 3.2s ease-in-out infinite; }
+@keyframes tailPulse { 0%, 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(46,201,92,.75)); } 50% { opacity: .45; filter: none; } 54% { opacity: 1; } }
+.hero-art .logo1 { width: 100%; }
+
+/* Intro : le logo s'écrit puis la voiture file vers la gauche */
+.intro-logo { width: min(82vw, 760px); overflow: visible; }
+.intro .i-wipe { transform-box: fill-box; transform-origin: 100% 50%; transform: scaleX(0); animation: iWipe 1.05s cubic-bezier(.6,0,.2,1) forwards .15s; }
+.intro .i-tail { opacity: 0; animation: iTail .7s ease forwards 1.05s; }
+.intro .i-word { opacity: 0; transform-box: fill-box; transform: translateY(12px); animation: iUp .7s cubic-bezier(.2,.7,.1,1) forwards .95s; }
+.intro .i-tag { opacity: 0; animation: iUp .7s cubic-bezier(.2,.7,.1,1) forwards 1.3s; transform-box: fill-box; transform: translateY(8px); }
+.intro .i-car { transform-box: fill-box; animation: iGo .6s cubic-bezier(.6,0,.9,.4) forwards 2.05s; }
+@keyframes iWipe { to { transform: scaleX(1); } }
+@keyframes iTail { 0% { opacity: 0; } 30% { opacity: 1; } 45% { opacity: .3; } 60%, 100% { opacity: 1; } }
+@keyframes iUp { to { opacity: 1; transform: none; } }
+@keyframes iGo { to { transform: translateX(-140px); opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .intro .i-wipe, .intro .i-tail, .intro .i-word, .intro .i-tag, .intro .i-car { animation-duration: .01s; animation-delay: 0s; } }
