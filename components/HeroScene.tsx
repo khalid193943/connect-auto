@@ -1,9 +1,9 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ArrowRight, BadgeEuro, Handshake, MapPin, ShieldCheck, Star as StarIco } from 'lucide-react'
 import type { Settings } from '@/lib/types'
 import { slotSrc } from '@/lib/images'
 import { CarArt } from './Logo'
-import { Slot } from './Slot'
 import { Stars } from './icons'
 import { OpenStatus } from './OpenStatus'
 
@@ -39,7 +39,7 @@ export function HeroScene({ s, stock, services }: { s: Settings; stock: number; 
   const rating = String(s.googleRating).replace('.', ',')
   return (
     <section className="hx" aria-labelledby="hero-title">
-      {photo ? <Slot id="IMG-01" images={s.images} className="hx-photo" priority alt="L’atelier Connect Auto à Milhaud" /> : <div className="hx-bg" />}
+      <div className="hx-bg" />
       <Floor />
       <div className="hx-noise" />
 
@@ -65,7 +65,18 @@ export function HeroScene({ s, stock, services }: { s: Settings; stock: number; 
           </div>
         </div>
 
-        {!photo && (
+        {photo ? (
+          <div className="hx-visual" data-hero style={{ ['--d' as string]: '.2s' }}>
+            <div className="hx-frame">
+              <Image src={photo} alt="Véhicule d’occasion présenté en studio" fill priority sizes="(max-width: 1080px) 92vw, 44vw" style={{ objectFit: 'cover' }} />
+              <span className="hx-frame-line" aria-hidden />
+            </div>
+            <div className="hx-car-mini" aria-hidden><CarArt /></div>
+            <div className="hx-chip c1"><span className="ci"><BadgeEuro /></span><span><b>TVA récupérable</b><span>sur les utilitaires éligibles</span></span></div>
+            <div className="hx-chip c2"><span className="ci"><Handshake /></span><span><b>Reprise de votre véhicule</b><span>proposition rapide</span></span></div>
+            <div className="hx-chip c3"><span className="ci"><StarIco /></span><span><b>{rating}/5 sur Google</b><span>{s.googleCount} avis clients</span></span></div>
+          </div>
+        ) : (
           <div className="hx-scene" aria-hidden>
             <div className="hx-streaks"><i /><i /><i /><i /></div>
             <div className="hx-glow" />

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import '@fontsource-variable/archivo/wdth.css'
 import '@fontsource-variable/archivo/wdth-italic.css'
+import '@fontsource-variable/dm-sans/opsz.css'
 import './globals.css'
 import { SITE_URL, INDEXABLE } from '@/lib/site'
 

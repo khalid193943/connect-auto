@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { ArrowRight, BadgeEuro, CalendarCheck, Clock, MapPin, ShieldCheck, Star as StarIco, Wrench } from 'lucide-react'
+import { ArrowRight, BadgeEuro, CalendarCheck, Clock, Gauge, MapPin, ShieldCheck, Star as StarIco, Wrench } from 'lucide-react'
 import { getReviews, getServices, getSettings, getVehicles } from '@/lib/data'
 import { CATEGORIES, DAYS, DAY_ORDER } from '@/lib/site'
 import { Slot, ILLUS } from '@/components/Slot'
@@ -96,8 +96,36 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* ============ SAVOIR-FAIRE ============ */}
+      <section className="section band-2" aria-labelledby="craft-title">
+        <div className="wrap craft">
+          <div className="craft-mosaic" data-reveal>
+            <Slot src="/images/ban-mecanique.webp" alt="Diagnostic électronique d’un moteur" sizes="(max-width: 980px) 100vw, 55vw" />
+            <Slot src="/images/detail-freinage.webp" alt="Contrôle du freinage" sizes="(max-width: 980px) 50vw, 27vw" />
+            <Slot src="/images/ban-carrosserie.webp" alt="Préparation avant peinture" sizes="(max-width: 980px) 50vw, 27vw" />
+          </div>
+          <div data-reveal style={{ ['--d' as string]: '.1s' }}>
+            <p className="eyebrow">Le savoir-faire</p>
+            <h2 id="craft-title" className="display h2">Un atelier <span className="accent">toutes marques</span>, un travail soigné</h2>
+            <p className="lead" style={{ marginTop: 22 }}>
+              Diagnostic, mécanique, carrosserie : chaque intervention commence par un contrôle et un devis clair. Les véhicules que nous vendons passent par le même atelier avant d’être proposés.
+            </p>
+            <div className="pillars">
+              {[
+                { i: <Gauge />, t: 'Diagnostic électronique', d: 'Lecture des défauts et contrôle sur le véhicule avant toute réparation.' },
+                { i: <BadgeEuro />, t: 'Devis avant intervention', d: 'Le prix est validé avec vous avant de commencer.' },
+                { i: <Wrench />, t: 'Toutes marques', d: 'Voitures, utilitaires et véhicules de société.' },
+                { i: <ShieldCheck />, t: 'Plan constructeur respecté', d: 'Entretien selon le carnet, pièces de qualité équivalente.' },
+              ].map((x) => (
+                <div className="pillar" key={x.t}>{x.i}<b>{x.t}</b><span>{x.d}</span></div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ============ STOCK ============ */}
-      <section className="section band-2" aria-labelledby="stock-title">
+      <section className="section" aria-labelledby="stock-title">
         <div className="wrap">
           <div className="sec-head" data-reveal>
             <div>
