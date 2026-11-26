@@ -75,6 +75,7 @@ export async function saveVehicle(_: R, fd: FormData): Promise<R> {
     visible: bool(fd, 'visible'),
     featured: bool(fd, 'featured'),
     demo: prev?.demo && photos.length === 0 ? prev.demo : undefined,
+    sourceUrl: prev?.sourceUrl,
     purchase: {
       date: str(fd, 'p_date', 20) || undefined,
       sellerName: str(fd, 'p_name', 120) || undefined,

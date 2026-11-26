@@ -31,6 +31,8 @@ export interface Vehicle {
   visible: boolean
   featured: boolean
   demo?: boolean
+  /** annonce d’origine (leboncoin, Très Bon Plan…) pour retrouver les photos */
+  sourceUrl?: string
   /** Registre des achats (livre de police) — jamais affiché sur le site */
   purchase?: {
     date?: string

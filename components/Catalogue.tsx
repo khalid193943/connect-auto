@@ -110,7 +110,7 @@ export function Catalogue({ vehicles, category }: { vehicles: Vehicle[]; categor
             </button>
           </div>
           <label className="field"><span>Recherche</span>
-            <input value={f.q} onChange={(e) => set('q', e.target.value)} placeholder="Trafic, 308, MT-07…" />
+            <input value={f.q} onChange={(e) => set('q', e.target.value)} placeholder="Trafic, Master, Berlingo…" />
           </label>
           <label className="field"><span>Marque</span>
             <select value={f.marque} onChange={(e) => set('marque', e.target.value)}>

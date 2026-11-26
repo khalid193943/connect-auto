@@ -45,6 +45,11 @@ export default async function EditVehicle({ params }: { params: Promise<{ id: st
         <input type="hidden" name="id" value={isNew ? '' : v.id} />
         <div className="card">
           <h2>Photos</h2>
+          {v.sourceUrl && (v.photos ?? []).length === 0 && (
+            <p className="banner info" style={{ margin: 0 }}>
+              Annonce reprise depuis <a href={v.sourceUrl} target="_blank" rel="noopener" style={{ textDecoration: 'underline' }}>{new URL(v.sourceUrl).hostname.replace('www.', '')}</a> : ajoutez les photos ici. Vérifiez aussi le prix et le statut.
+            </p>
+          )}
           <PhotoManager initial={v.photos ?? []} enabled={HAS_BLOB} />
         </div>
 
