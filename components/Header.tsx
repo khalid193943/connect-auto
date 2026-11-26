@@ -4,6 +4,7 @@ import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { ArrowRight, Menu, MessageCircle, Phone, Search, X } from 'lucide-react'
 import { LogoWord } from './Logo'
+import { ThemeToggle } from './ThemeToggle'
 import { NAV } from '@/lib/site'
 import { telHref, waHref } from '@/lib/format'
 
@@ -39,12 +40,14 @@ export function Header({ phone, whatsapp }: { phone: string; whatsapp: string })
           ))}
         </nav>
         <div className="hdr-cta">
+          <ThemeToggle />
           <Link className="hdr-ico" href="/occasions" aria-label="Rechercher un véhicule"><Search /></Link>
           <a className="hdr-ico" href={telHref(phone)} aria-label={`Appeler le ${phone}`}><Phone /></a>
           <Link href="/rendez-vous" className="btn btn-accent btn-sm hdr-pill">
             Rendez-vous
           </Link>
         </div>
+        <span className="theme-mob"><ThemeToggle /></span>
         <button className="hdr-burger" aria-label="Ouvrir le menu" aria-expanded={open} onClick={() => setOpen(true)}>
           <Menu />
         </button>

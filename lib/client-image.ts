@@ -1,5 +1,4 @@
 'use client'
-import { upload } from '@vercel/blob/client'
 
 /** Réduit une photo de téléphone (max 2000 px, JPEG) avant l’envoi : plus rapide sur la 4G. */
 export async function shrink(file: File, max = 2000, quality = 0.84): Promise<File> {
@@ -20,8 +19,15 @@ export async function shrink(file: File, max = 2000, quality = 0.84): Promise<Fi
 }
 
 export async function uploadPhoto(file: File, folder: string, payload: string, raw = false): Promise<string> {
-  const small = raw || file.type === 'image/svg+xml' ? file : await shrink(file)
-  const safe = small.name.normalize('NFD').replace(/[^\w.-]+/g, '-').toLowerCase()
-  const res = await upload(`${folder}/${safe}`, small, { access: 'public', handleUploadUrl: '/api/upload', clientPayload: payload })
-  return res.url
+  // réduction plus forte si besoin pour rester sous la limite d’envoi (4 Mo)
+  let small = raw || file.type === 'image/svg+xml' ? file : await shrink(file)
+  if (!raw && small.size > 3.8 * 1024 * 1024) small = await shrink(file, 1600, 0.75)
+  const fd = new FormData()
+  fd.append('file', small)
+  fd.append('folder', folder)
+  fd.append('scope', payload)
+  const res = await fetch('/api/upload', { method: 'POST', body: fd })
+  const json = (await res.json().catch(() => ({}))) as { url?: string; error?: string }
+  if (!res.ok || !json.url) throw new Error(json.error || 'Envoi impossible')
+  return json.url
 }

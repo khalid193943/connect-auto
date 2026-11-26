@@ -9,7 +9,7 @@ import {
 
 const DB_URL = process.env.DATABASE_URL || process.env.POSTGRES_URL || ''
 export const HAS_DB = DB_URL.length > 0
-export const HAS_BLOB = !!process.env.BLOB_READ_WRITE_TOKEN
+export const HAS_BLOB = !!(process.env.BLOB_READ_WRITE_TOKEN || process.env.BLOB_STORE_ID)
 
 const seedData = (): { [K in CollectionName]: Collections[K][] } => ({
   vehicles: SEED_VEHICLES,
@@ -84,8 +84,8 @@ async function init() {
     if (st[0]) {
       const cur = { ...st[0].data }
       let changed = false
-      for (const [k, oldText] of Object.entries(OLD_TEXTS)) {
-        if (cur[k] === oldText) { cur[k] = (SEED_SETTINGS as unknown as Record<string, unknown>)[k]; changed = true }
+      for (const [k, olds] of Object.entries(OLD_TEXTS)) {
+        if (olds.includes(cur[k] as string)) { cur[k] = (SEED_SETTINGS as unknown as Record<string, unknown>)[k]; changed = true }
       }
       if (changed) await sql`update ca_docs set data = ${JSON.stringify(cur)}::jsonb, updated_at = now() where col = 'settings' and id = 'site'`
     }

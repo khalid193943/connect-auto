@@ -1178,3 +1178,94 @@ a.info6-item:hover { background: rgba(255,255,255,.04); }
 .h6-title { font-size: clamp(32px, 3.9vw, 64px); }
 .h6-copy { max-width: 720px; }
 @media (max-width: 640px) { .h6-title span { white-space: normal; } }
+
+/* ---------- Espacement entre sections ---------- */
+.s6 { padding-block: clamp(48px, 5.4vw, 96px); }
+.s6 + .s6 { padding-top: clamp(24px, 2.6vw, 44px); }
+.s6-head { margin-bottom: clamp(22px, 2.2vw, 34px); }
+.h6 { padding-bottom: clamp(20px, 3vw, 44px); }
+.theme-mob { display: none; }
+@media (max-width: 1180px) { .theme-mob { display: block; } .hdr-cta .theme-btn { display: none; } }
+@media (max-width: 640px) { .theme-mob .hdr-ico { display: grid; } }
+
+/* ==========================================================================
+   VERSION CLAIRE (bouton soleil / lune)
+   La carte d’accueil, les bandeaux photo et le pied de page restent sombres.
+   ========================================================================== */
+html[data-theme='light'] {
+  color-scheme: light;
+  --bg: #f3f4f6; --bg-2: #eceef1; --surface: #ffffff; --surface-2: #f7f8fa;
+  --line: rgba(17,20,24,.09); --line-2: rgba(17,20,24,.18); --glass-line: rgba(17,20,24,.09);
+  --text: #121519; --muted: #525b65; --dim: #6c747d;
+}
+html[data-theme='light'] body { background: #f3f4f6; color: var(--text); }
+html[data-theme='light'] .hdr-nav a { color: #2a3037; }
+html[data-theme='light'] .hdr-nav a:hover, html[data-theme='light'] .hdr-nav a[aria-current='page'] { color: #000; }
+html[data-theme='light'] .hdr.solid { background: rgba(255,255,255,.88); border-color: var(--line); }
+html[data-theme='light'] .hdr-ico { color: #2a3037; }
+html[data-theme='light'] .hdr-ico:hover { background: rgba(0,0,0,.06); }
+html[data-theme='light'] .hdr-burger { border-color: var(--line-2); color: #121519; }
+html[data-theme='light'] .hdr-logo .lw-connect, html[data-theme='light'] .menu .lw-connect { fill: #15181c; }
+html[data-theme='light'] .menu { background: #f3f4f6; }
+html[data-theme='light'] .btn:not(.btn-accent):not(.btn-light) { background: #fff; border-color: var(--line-2); color: #121519; }
+html[data-theme='light'] .btn:not(.btn-accent):not(.btn-light):hover { border-color: #121519; }
+html[data-theme='light'] .link-arrow { color: #121519; }
+html[data-theme='light'] .lead, html[data-theme='light'] .muted { color: var(--muted); }
+html[data-theme='light'] .eyebrow { color: #5d6670; }
+
+/* Carte d’accueil : reste sombre */
+.h6-card { --text: #f4f6f8; color: #f4f6f8; }
+.h6-card .btn:not(.btn-accent) { background: rgba(255,255,255,.06) !important; border-color: rgba(255,255,255,.22) !important; color: #f4f6f8 !important; }
+html[data-theme='light'] .h6-card { border-color: transparent; box-shadow: 0 30px 70px -40px rgba(0,0,0,.45); }
+html[data-theme='light'] .h6-search { background: #fff; border-color: var(--line); box-shadow: 0 24px 50px -30px rgba(0,0,0,.25); }
+html[data-theme='light'] .h6-search label span { color: #5d6670; }
+html[data-theme='light'] .h6-search select { background-color: #f3f4f6; border-color: var(--line); color: #121519; }
+
+/* Cartes */
+html[data-theme='light'] .svc6-card, html[data-theme='light'] .veh, html[data-theme='light'] .duo-card, html[data-theme='light'] .info6,
+html[data-theme='light'] .form-card, html[data-theme='light'] .filters, html[data-theme='light'] .vd-panel, html[data-theme='light'] .info-card,
+html[data-theme='light'] .post, html[data-theme='light'] .review, html[data-theme='light'] .svc, html[data-theme='light'] .why-item,
+html[data-theme='light'] .pillar, html[data-theme='light'] .spec, html[data-theme='light'] .equip li, html[data-theme='light'] .sr-info {
+  background: #fff; border-color: var(--line); color: var(--text);
+}
+html[data-theme='light'] .svc6-card:hover, html[data-theme='light'] .veh:hover, html[data-theme='light'] .duo-card:hover { border-color: rgba(31,158,72,.55); box-shadow: 0 18px 40px -26px rgba(0,0,0,.25); }
+html[data-theme='light'] .svc6-img { background: #e8eaed; }
+html[data-theme='light'] .veh-title span, html[data-theme='light'] .veh-specs span, html[data-theme='light'] .duo-txt span, html[data-theme='light'] .info6-item small { color: #5d6670; }
+html[data-theme='light'] .veh-specs span + span::before { color: #b3b9c0; }
+html[data-theme='light'] .veh-arrow, html[data-theme='light'] .rail-nav button { background: #fff; border-color: var(--line-2); color: #121519; }
+html[data-theme='light'] .rail-nav button:hover, html[data-theme='light'] .veh:hover .veh-arrow { background: var(--accent); border-color: var(--accent); color: #03140a; }
+html[data-theme='light'] .duo-go { background: rgba(255,255,255,.9); border-color: var(--line); color: #121519; }
+html[data-theme='light'] .duo-img { opacity: .9; }
+html[data-theme='light'] a.info6-item:hover { background: #f3f4f6; }
+html[data-theme='light'] .why-list, html[data-theme='light'] .pillars, html[data-theme='light'] .spec-grid { background: var(--line); }
+html[data-theme='light'] .band-2 { background: #eceef1; }
+html[data-theme='light'] .brands { background: #eceef1; border-color: var(--line); }
+html[data-theme='light'] .brands-track .bn { color: rgba(18,21,25,.38); }
+html[data-theme='light'] .brands-track img { filter: brightness(0); opacity: .5; }
+html[data-theme='light'] .brands-head { color: #7a828b; }
+
+/* Formulaires, catalogue, fiches, textes */
+html[data-theme='light'] .field input, html[data-theme='light'] .field select, html[data-theme='light'] .field textarea { background: #f6f7f9; border-color: var(--line-2); color: #121519; }
+html[data-theme='light'] .field input:focus, html[data-theme='light'] .field select:focus, html[data-theme='light'] .field textarea:focus { background: #fff; }
+html[data-theme='light'] .field > span { color: #3b434c; }
+html[data-theme='light'] .chip { border-color: var(--line-2); color: #121519; }
+html[data-theme='light'] .catalog-top select { background-color: #fff; }
+html[data-theme='light'] .page-hero { border-color: var(--line); }
+html[data-theme='light'] .page-hero::before { background: radial-gradient(60% 90% at 85% 0%, rgba(46,201,92,.12), transparent 70%); }
+html[data-theme='light'] .prose { color: #2b3138; }
+html[data-theme='light'] .prose strong, html[data-theme='light'] .prose h2, html[data-theme='light'] .prose h3 { color: #121519; }
+html[data-theme='light'] .prose .note { background: #fff; }
+html[data-theme='light'] .review p { color: #2b3138; }
+html[data-theme='light'] .gallery-main, html[data-theme='light'] .gallery-strip button { background: #e8eaed; }
+html[data-theme='light'] .hours-table td { border-color: var(--line); }
+html[data-theme='light'] .tag:not(.green):not(.warn):not(.sold) { background: rgba(255,255,255,.85); color: #121519; border-color: var(--line); }
+html[data-theme='light'] .crumbs { color: #6c747d; }
+html[data-theme='light'] .crumbs a:hover { color: #000; }
+html[data-theme='light'] .map { filter: none; }
+html[data-theme='light'] .scrim { background: rgba(0,0,0,.35); }
+
+/* Bandeaux photo et pied de page : restent sombres */
+.fullband, .page-hero.with-img, .ftr, .mbar, .nophoto { --text: #f4f6f8; --muted: #a3acb7; --dim: #7c858f; --line: rgba(255,255,255,.08); --line-2: rgba(255,255,255,.16); --glass-line: rgba(255,255,255,.1); color: #f4f6f8; }
+html[data-theme='light'] .ftr .btn:not(.btn-accent) { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.16); color: #f4f6f8; }
+html[data-theme='light'] .fullband .btn:not(.btn-accent):not(.btn-light) { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.22); color: #f4f6f8; }
+html[data-theme='light'] .page-hero.with-img .crumbs, html[data-theme='light'] .page-hero.with-img .lead { color: #d0d6dc; }

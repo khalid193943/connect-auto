@@ -11,7 +11,7 @@ Next.js 16 · React 19 · Postgres (Neon) · Vercel Blob · aucune autre dépend
 
 1. **Importer** le dépôt GitHub dans Vercel (Add New → Project → `connect-auto`) et déployer. Sans base de données, le site fonctionne en **mode démonstration** (données d’exemple, admin `fouad` / `demo`, rien n’est conservé).
 2. **Base de données** : onglet *Storage* du projet → *Create Database* → **Neon (Postgres)** → relier au projet. La variable `DATABASE_URL` est ajoutée automatiquement. Les tables se créent seules au premier passage.
-3. **Photos** : *Storage* → *Create* → **Blob** → relier au projet (`BLOB_READ_WRITE_TOKEN` est ajouté).
+3. **Photos** : *Storage* → *Create Database* → **Blob**, accès **Public** (non modifiable ensuite) → *Create*. Le stockage est relié au projet (variable `BLOB_STORE_ID` ou `BLOB_READ_WRITE_TOKEN` : les deux fonctionnent).
 4. **Compte du gérant** : *Settings → Environment Variables* → `ADMIN_PASSWORD` = mot de passe de Fouad (identifiant : `fouad`). Il pourra le changer depuis *Mon compte*.
 5. **Redéployer** (Deployments → … → Redeploy).
 6. Quand le nom de domaine est prêt : l’ajouter dans *Settings → Domains*, puis définir `SITE_URL=https://www.exemple.fr` et redéployer. **Tant que `SITE_URL` n’est pas défini, le site demande à Google de ne pas l’indexer** (version de travail).
