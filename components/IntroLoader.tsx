@@ -33,7 +33,11 @@ export default function IntroLoader({ onReady, onDone }: { onReady: () => void; 
           </g>
           <path className="i-tail" d={v1.tail} fill="url(#it)" filter="url(#ig)" />
         </g>
-        <path className="i-word" d={v1.word} fill="#F4F6F8" />
+        <g className="i-word">
+          <path d={v1.word} fill="#F4F6F8" />
+          <path d={v1.nn} fill="#2EC95C" />
+          <path d={v1.auto} fill="#F4F6F8" />
+        </g>
         <path className="i-tag" d={v1.tag} fill="#2EC95C" />
       </svg>
       <div className="intro-bar"><i /></div>

@@ -4,7 +4,7 @@ type Variant = 'full' | 'compact' | 'car'
 
 /**
  * Logo officiel Connect Auto (version « Ligne ») : silhouette d’un trait, feu arrière vert,
- * nom en capitales larges. full = avec la signature, compact = sans, car = silhouette seule.
+ * nom en capitales larges avec le NN relié en vert. full = avec la signature, compact = sans, car = silhouette seule.
  * Les couleurs suivent --l1-ink et --l1-acc (clair / sombre).
  */
 export function Logo({ id = 'lg', variant = 'compact', className }: { id?: string; variant?: Variant; className?: string }) {
@@ -28,7 +28,13 @@ export function Logo({ id = 'lg', variant = 'compact', className }: { id?: strin
         <path className="l1-ink" d={v1.nose} opacity=".75" />
         <path className="l1-tail" d={v1.tail} fill={`url(#${id}t)`} filter={`url(#${id}g)`} />
       </g>
-      {variant !== 'car' && <path className="l1-ink l1-word" d={v1.word} />}
+      {variant !== 'car' && (
+        <>
+          <path className="l1-ink l1-word" d={v1.word} />
+          <path className="l1-acc l1-nn" d={v1.nn} />
+          <path className="l1-ink l1-auto" d={v1.auto} />
+        </>
+      )}
       {variant === 'full' && <path className="l1-acc l1-tag" d={v1.tag} />}
     </svg>
   )

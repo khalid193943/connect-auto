@@ -1375,3 +1375,11 @@ html[data-theme='light'] .hdr .logo1, html[data-theme='light'] .menu .logo1 { --
 @keyframes iUp { to { opacity: 1; transform: none; } }
 @keyframes iGo { to { transform: translateX(-140px); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .intro .i-wipe, .intro .i-tail, .intro .i-word, .intro .i-tag, .intro .i-car { animation-duration: .01s; animation-delay: 0s; } }
+/* Pied de page : AUTO clignote comme un néon, le feu arrière reste allumé */
+.ftr-logo .l1-tail { animation: none; filter: drop-shadow(0 0 8px rgba(46,201,92,.6)); }
+.ftr-logo .l1-auto { animation: autoNeon 4.5s linear infinite; }
+@keyframes autoNeon {
+  0%, 17%, 21%, 24%, 58%, 62%, 100% { opacity: 1; filter: drop-shadow(0 0 5px rgba(255,255,255,.5)) drop-shadow(0 0 16px rgba(46,201,92,.55)); }
+  19%, 23%, 60% { opacity: .22; filter: none; }
+}
+@media (prefers-reduced-motion: reduce) { .ftr-logo .l1-auto { animation: none; } }
