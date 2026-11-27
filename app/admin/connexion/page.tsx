@@ -11,7 +11,7 @@ export default async function Connexion() {
   const users = await findUsers()
   return (
     <div className="login">
-      <div className="login-logo"><Logo id="loginlogo" /></div>
+      <div className="login-logo"><Logo variant="full" tone="dark" /></div>
       <LoginForm demo={HAS_DB ? null : DEMO_LOGIN} noUser={HAS_DB && users.length === 0} />
     </div>
   )

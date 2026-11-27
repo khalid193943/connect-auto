@@ -1,46 +1,39 @@
-import v1 from '@/lib/brand/logo-v1.json'
+import sizes from '@/lib/brand/logo-sizes.json'
 
-type Variant = 'full' | 'compact' | 'car'
+type Variant = 'full' | 'compact' | 'mark'
+/** Fond sur lequel le logo est posé : auto = suit le thème du site (clair / sombre). */
+type Tone = 'auto' | 'dark' | 'light'
+
+const FILE: Record<Variant, keyof typeof sizes> = { full: 'complet', compact: 'compact', mark: 'utilitaire' }
 
 /**
- * Logo officiel Connect Auto : silhouette d’utilitaire d’un trait, filet vert à l’arrière,
- * nom en capitales larges avec le NN relié en vert. full = avec la signature « Spécialiste utilitaires », compact = sans, car = silhouette seule.
- * Les couleurs suivent --l1-ink et --l1-acc (clair / sombre).
+ * Logo officiel Connect Auto : utilitaire argent vu de trois quarts, nom chromé, « Spécialiste des utilitaires » en vert et route.
+ * Fichiers vectoriels dans /public/brand ; les deux versions (fond clair / fond sombre) basculent avec le thème sans rechargement.
+ * full = logo complet, compact = utilitaire + nom (en-tête), mark = utilitaire seul.
  */
-export function Logo({ id = 'lg', variant = 'compact', className }: { id?: string; variant?: Variant; className?: string }) {
-  const vb = variant === 'full' ? v1.vb : variant === 'car' ? v1.vbCar : v1.vbCompact
+export function Logo({ variant = 'compact', tone = 'auto', className, label = 'Connect Auto, spécialiste des utilitaires' }: {
+  variant?: Variant
+  tone?: Tone
+  className?: string
+  label?: string
+  /** conservé pour compatibilité avec les anciens appels */
+  id?: string
+}) {
+  const f = FILE[variant]
+  const [w, h] = sizes[f]
+  const img = (t: 'clair' | 'sombre') => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className={`lg-${t}`} src={`/brand/logo-${f}-fond-${t}.svg`} alt="" width={w} height={h} decoding="async" loading="lazy" draggable={false} />
+  )
   return (
-    <svg className={`logo1 ${className ?? ''}`} viewBox={vb} role="img" aria-label="Connect Auto">
-      <defs>
-        <linearGradient id={`${id}t`} x1={v1.tailGrad[0]} y1="0" x2={v1.tailGrad[1]} y2="0" gradientUnits="userSpaceOnUse">
-          <stop offset="0" stopColor="#2EC95C" stopOpacity="0" />
-          <stop offset=".35" stopColor="#2EC95C" />
-          <stop offset="1" stopColor="#8AE3A5" />
-        </linearGradient>
-        <filter id={`${id}g`} x="-20%" y="-200%" width="140%" height="500%">
-          <feGaussianBlur stdDeviation="4" result="b" />
-          <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-        </filter>
-      </defs>
-      <g className="l1-car">
-        <path className="l1-ink" d={v1.roof} />
-        <path className="l1-ink" d={v1.shoulder} />
-        <path className="l1-ink" d={v1.nose} opacity=".88" />
-        <path className="l1-tail" d={v1.tail} fill={`url(#${id}t)`} filter={`url(#${id}g)`} />
-      </g>
-      {variant !== 'car' && (
-        <>
-          <path className="l1-ink l1-word" d={v1.word} />
-          <path className="l1-acc l1-nn" d={v1.nn} />
-          <path className="l1-ink l1-auto" d={v1.auto} />
-        </>
-      )}
-      {variant === 'full' && <path className="l1-acc l1-tag" d={v1.tag} />}
-    </svg>
+    <span className={`logo2 logo2-${variant} tone-${tone} ${className ?? ''}`} role="img" aria-label={label} style={{ aspectRatio: `${w} / ${h}` }}>
+      {tone !== 'dark' && img('clair')}
+      {tone !== 'light' && img('sombre')}
+    </span>
   )
 }
 
-/** La silhouette du logo seule (décor). */
+/** L’utilitaire seul, en grand (bandeaux de pages, 404). */
 export function CarArt({ className }: { className?: string; ink?: string; accent?: string }) {
-  return <Logo id="carart" variant="car" className={className} />
+  return <Logo variant="mark" className={className} label="" />
 }

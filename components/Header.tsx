@@ -30,7 +30,7 @@ export function Header({ phone, whatsapp, stock = 0 }: { phone: string; whatsapp
     <>
       <header className={`hdr ${solid ? 'solid' : ''}`}>
         <Link href="/" className="hdr-logo" aria-label="Connect Auto, accueil">
-          <Logo id="hdrlogo" />
+          <Logo variant="compact" />
         </Link>
         <nav className="hdr-nav" aria-label="Navigation principale">
           {NAV.map((n) => (
@@ -57,7 +57,7 @@ export function Header({ phone, whatsapp, stock = 0 }: { phone: string; whatsapp
       <div className={`menu ${open ? 'open' : ''}`} role="dialog" aria-modal="true" aria-label="Menu" hidden={!open}>
         <div className="menu-top">
           <Link href="/" style={{ width: 190 }} aria-label="Accueil">
-            <Logo id="menulogo" />
+            <Logo variant="compact" />
           </Link>
           <button className="hdr-burger" style={{ display: 'grid' }} aria-label="Fermer le menu" onClick={() => setOpen(false)}>
             <X />

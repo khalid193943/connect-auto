@@ -12,8 +12,7 @@ export function Footer({ s, services }: { s: Settings; services: Service[] }) {
     <footer className="ftr">
       <div className="ftr-top">
         <div className="ftr-brand">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/brand/logo.svg" alt="Connect Auto" width={200} height={66} loading="lazy" style={{ width: 200, height: "auto" }} />
+          <Logo variant="compact" tone="dark" />
           <p className="muted small" style={{ margin: 0 }}>
             Garage indépendant à Milhaud, près de Nîmes : vente et reprise de véhicules d’occasion, entretien, mécanique,
             carrosserie et pneus.
@@ -62,7 +61,7 @@ export function Footer({ s, services }: { s: Settings; services: Service[] }) {
         Connect Auto accueille les automobilistes et les professionnels de {NEARBY.slice(0, 12).join(', ')} et de tout le Gard :
         voitures, utilitaires, camions et motos d’occasion, reprise de véhicules, entretien et réparation toutes marques.
       </p>
-      <div className="ftr-logo" aria-hidden><Logo id="ftrlogo" variant="full" /></div>
+      <div className="ftr-logo" aria-hidden><Logo variant="full" tone="dark" label="" /></div>
       <div className="ftr-bottom">
         <span>© {new Date().getFullYear()} {s.legal.company} · SIRET {s.legal.siret}</span>
         <nav aria-label="Informations légales">

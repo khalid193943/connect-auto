@@ -23,7 +23,7 @@ export function AdminNav({ newLeads, name, role, demo, perms }: { newLeads: numb
   return (
     <>
       <aside className="side" aria-label="Menu de l’espace garage">
-        <Link href="/admin" className="side-logo" aria-label="Accueil de l’espace garage"><Logo id="sidelogo" /></Link>
+        <Link href="/admin" className="side-logo" aria-label="Accueil de l’espace garage"><Logo variant="compact" tone="dark" /></Link>
         {demo && <span className="side-demo">Démo · rien n’est enregistré</span>}
         <nav className="side-nav">
           {items.map((t) => (
@@ -45,7 +45,7 @@ export function AdminNav({ newLeads, name, role, demo, perms }: { newLeads: numb
       </aside>
 
       <header className="mtop">
-        <Link href="/admin" className="mtop-logo" aria-label="Accueil"><Logo id="mtoplogo" /></Link>
+        <Link href="/admin" className="mtop-logo" aria-label="Accueil"><Logo variant="compact" tone="dark" /></Link>
         {demo && <span className="mtop-demo">Démo</span>}
         <Link href="/admin/reglages" className={`av ${under(SETTINGS) ? 'on' : ''}`} aria-label="Réglages et compte">{initial}</Link>
       </header>

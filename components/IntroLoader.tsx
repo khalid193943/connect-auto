@@ -1,47 +1,46 @@
 'use client'
-import { useEffect } from 'react'
-import v1 from '@/lib/brand/logo-v1.json'
+import { useEffect, useRef, useState } from 'react'
+import sizes from '@/lib/brand/logo-sizes.json'
 
-const [cx, cy, cw, ch] = v1.vbCar.split(' ').map(Number)
-
-/** Le logo officiel s’écrit : la silhouette de l’utilitaire apparaît, le filet vert s’allume, le nom suit, puis le véhicule file. */
+/**
+ * Ouverture du site : la route se dessine, l’utilitaire arrive, le nom chromé monte avec un reflet, puis le slogan.
+ * Les calques sont les fichiers vectoriels du logo (/public/brand/intro-*.svg), dans la version du thème en cours.
+ */
 export default function IntroLoader({ onReady, onDone }: { onReady: () => void; onDone: () => void }) {
+  const [tone] = useState<'clair' | 'sombre'>(() =>
+    typeof document !== 'undefined' && document.documentElement.dataset.theme === 'dark' ? 'sombre' : 'clair')
+  const [go, setGo] = useState(false)
+  const loaded = useRef(0)
+  const [w, h] = sizes.complet
+  const LAYERS = 4
+
   useEffect(() => {
     onReady()
+    const fallback = window.setTimeout(() => setGo(true), 700)   // ne jamais bloquer si une image tarde
+    return () => window.clearTimeout(fallback)
+  }, [onReady])
+
+  useEffect(() => {
+    if (!go) return
     const t = window.setTimeout(onDone, 3300)
     return () => window.clearTimeout(t)
-  }, [onReady, onDone])
+  }, [go, onDone])
+
+  const onLoad = () => { loaded.current += 1; if (loaded.current >= LAYERS) setGo(true) }
+  const L = (file: string, cls: string) => (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img className={`il ${cls}`} src={`/brand/intro-${file}.svg`} alt="" width={w} height={h} onLoad={onLoad} draggable={false} />
+  )
 
   return (
-    <div className="intro" onClick={onDone} role="presentation">
-      <svg className="intro-logo" viewBox={v1.vb} aria-hidden>
-        <defs>
-          <linearGradient id="it" x1={v1.tailGrad[0]} y1="0" x2={v1.tailGrad[1]} y2="0" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stopColor="#2EC95C" stopOpacity="0" />
-            <stop offset=".35" stopColor="#2EC95C" />
-            <stop offset="1" stopColor="#8AE3A5" />
-          </linearGradient>
-          <filter id="ig" x="-30%" y="-300%" width="160%" height="700%">
-            <feGaussianBlur stdDeviation="6" result="b" />
-            <feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge>
-          </filter>
-          <clipPath id="iclip"><rect className="i-wipe" x={cx} y={cy} width={cw} height={ch} /></clipPath>
-        </defs>
-        <g className="i-car">
-          <g clipPath="url(#iclip)">
-            <path d={v1.roof} className="i-ink" />
-            <path d={v1.shoulder} className="i-ink" />
-            <path d={v1.nose} className="i-ink" opacity=".88" />
-          </g>
-          <path className="i-tail" d={v1.tail} fill="url(#it)" filter="url(#ig)" />
-        </g>
-        <g className="i-word">
-          <path d={v1.word} className="i-ink" />
-          <path d={v1.nn} className="i-acc" />
-          <path d={v1.auto} className="i-ink" />
-        </g>
-        <path className="i-tag i-acc" d={v1.tag} />
-      </svg>
+    <div className={`intro ${go ? 'go' : ''}`} onClick={onDone} role="presentation">
+      <div className="intro-stage2" style={{ aspectRatio: `${w} / ${h}` }} role="img" aria-label="Connect Auto, spécialiste des utilitaires">
+        {L(`route-fond-${tone}`, 'il-road')}
+        {L(`utilitaire-fond-${tone}`, 'il-van')}
+        {L(`nom-fond-${tone}`, 'il-name')}
+        <span className="il-shine" style={{ WebkitMaskImage: `url(/brand/intro-nom-fond-${tone}.svg)`, maskImage: `url(/brand/intro-nom-fond-${tone}.svg)` }} />
+        {L('slogan', 'il-slogan')}
+      </div>
       <div className="intro-bar"><i /></div>
       <button className="intro-skip-btn" onClick={onDone}>Passer</button>
     </div>
