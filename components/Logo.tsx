@@ -24,8 +24,8 @@ export function Logo({ id = 'lg', variant = 'compact', className }: { id?: strin
       </defs>
       <g className="l1-car">
         <path className="l1-ink" d={v1.roof} />
-        <path className="l1-ink" d={v1.shoulder} opacity=".9" />
-        <path className="l1-ink" d={v1.nose} opacity=".75" />
+        <path className="l1-ink" d={v1.shoulder} />
+        <path className="l1-ink" d={v1.nose} opacity=".88" />
         <path className="l1-tail" d={v1.tail} fill={`url(#${id}t)`} filter={`url(#${id}g)`} />
       </g>
       {variant !== 'car' && (

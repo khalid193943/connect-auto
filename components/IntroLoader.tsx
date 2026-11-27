@@ -28,8 +28,8 @@ export default function IntroLoader({ onReady, onDone }: { onReady: () => void; 
         <g className="i-car">
           <g clipPath="url(#iclip)">
             <path d={v1.roof} fill="#F4F6F8" />
-            <path d={v1.shoulder} fill="#F4F6F8" opacity=".9" />
-            <path d={v1.nose} fill="#F4F6F8" opacity=".75" />
+            <path d={v1.shoulder} fill="#F4F6F8" />
+            <path d={v1.nose} fill="#F4F6F8" opacity=".88" />
           </g>
           <path className="i-tail" d={v1.tail} fill="url(#it)" filter="url(#ig)" />
         </g>
