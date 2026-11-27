@@ -88,6 +88,17 @@ export default async function Home() {
         <BrandCarousel logos={s.brandLogos ?? {}} place="top" />
       </section>
 
+      {/* ============ OCCASIONS ============ */}
+      <section className="s6 wrap" aria-labelledby="stock-title">
+        <div className="s6-head">
+          <h2 id="stock-title" className="t6">Nos occasions <span>du moment</span></h2>
+          <Link href="/occasions" className="link-arrow">Tout le stock ({available.length}) <ArrowRight /></Link>
+        </div>
+        <CardRail label="Véhicules à la une">
+          {featured.map((v) => <VehicleCard key={v.id} v={v} />)}
+        </CardRail>
+      </section>
+
       {/* ============ L’ATELIER ============ */}
       <section className="s6 wrap" aria-labelledby="svc-title">
         <div className="s6-head">
@@ -116,17 +127,6 @@ export default async function Home() {
             )
           })}
         </div>
-      </section>
-
-      {/* ============ OCCASIONS ============ */}
-      <section className="s6 wrap" aria-labelledby="stock-title">
-        <div className="s6-head">
-          <h2 id="stock-title" className="t6">Nos occasions <span>du moment</span></h2>
-          <Link href="/occasions" className="link-arrow">Tout le stock ({available.length}) <ArrowRight /></Link>
-        </div>
-        <CardRail label="Véhicules à la une">
-          {featured.map((v) => <VehicleCard key={v.id} v={v} />)}
-        </CardRail>
       </section>
 
       {/* ============ DEUX ATOUTS ============ */}

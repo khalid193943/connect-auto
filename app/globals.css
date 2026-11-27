@@ -1497,3 +1497,12 @@ html[data-theme='light'] .bch-chip { background: #eef0f3; border-color: #fff; co
   .svc6-tx b { padding-right: 30px; display: block; }
   .svc6-go { position: absolute; top: 16px; right: 18px; margin: 0; }
 }
+
+/* ---------- Accueil : plus d’air entre les sections, lecture plus simple ---------- */
+.s6 { padding-block: clamp(64px, 7.2vw, 132px); }
+.s6 + .s6 { padding-top: clamp(64px, 7.2vw, 132px); }
+.s6 + .s6::before { content: ''; position: absolute; top: 0; left: 50%; width: min(160px, 30%); height: 1px; transform: translateX(-50%); background: linear-gradient(90deg, transparent, var(--line, rgba(255,255,255,.12)), transparent); }
+.s6 { position: relative; }
+.s6-head { margin-bottom: clamp(22px, 2.4vw, 36px); }
+.bmq-top { padding: clamp(18px, 2.4vw, 36px) 0 0; }
+@media (max-width: 640px) { .s6, .s6 + .s6 { padding-block: 56px; } }
