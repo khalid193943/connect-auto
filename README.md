@@ -36,3 +36,17 @@ npm run build
 ```
 
 Structure : `app/(site)` pages publiques · `app/admin` espace garage · `app/api` PDF, envoi de photos, exports · `lib/` données, contenus (services, articles), authentification · `components/` interface.
+
+
+## Remplissage automatique par plaque
+
+Dans l’espace garage, « Nouveau véhicule » commence par un champ plaque (AB-123-CD) : marque, modèle, version, année, énergie, boîte, puissance, CV fiscaux, places, portes, couleur, catégorie, plaque et VIN (registre) et un texte d’annonce de départ se remplissent tout seuls. Il reste le prix, le kilométrage et les photos, puis « Publier l’annonce ».
+
+Pour l’activer, renseigner dans Vercel **une** de ces variables :
+
+| Variable | Fournisseur |
+| --- | --- |
+| `PLAQUE_API_TOKEN` | apiplaqueimmatriculation.com |
+| `REGCHECK_USERNAME` | regcheck.org.uk (CheckFrance) |
+
+Chaque recherche consomme un crédit chez le fournisseur ; la même plaque retapée dans les 24 h ne recoûte rien. En démo (sans base de données) un exemple est renvoyé, sans frais.

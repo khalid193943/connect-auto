@@ -6,6 +6,8 @@ import { HAS_BLOB } from '@/lib/store'
 import { Back } from '@/components/admin/ui'
 import { ActionForm, ConfirmButton, ActButton } from '@/components/admin/ActionForm'
 import { PhotoManager } from '@/components/admin/PhotoManager'
+import { PlateLookup } from '@/components/admin/PlateLookup'
+import { plateLookupEnabled } from '@/lib/plate'
 import { deleteVehicle, saveVehicle, setVehicleStatus } from '../../../actions'
 import { CATEGORIES } from '@/lib/site'
 import type { Vehicle } from '@/lib/types'
@@ -41,8 +43,9 @@ export default async function EditVehicle({ params }: { params: Promise<{ id: st
         </div>
       )}
 
-      <ActionForm action={saveVehicle}>
+      <ActionForm action={saveVehicle} label={isNew ? 'Publier l’annonce' : 'Enregistrer'}>
         <input type="hidden" name="id" value={isNew ? '' : v.id} />
+        {isNew && <PlateLookup enabled={plateLookupEnabled()} />}
         <div className="card">
           <h2>Photos</h2>
           {v.sourceUrl && (v.photos ?? []).length === 0 && (
