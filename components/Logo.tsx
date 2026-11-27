@@ -3,8 +3,8 @@ import v1 from '@/lib/brand/logo-v1.json'
 type Variant = 'full' | 'compact' | 'car'
 
 /**
- * Logo officiel Connect Auto (version « Ligne ») : silhouette d’un trait, feu arrière vert,
- * nom en capitales larges avec le NN relié en vert. full = avec la signature, compact = sans, car = silhouette seule.
+ * Logo officiel Connect Auto : silhouette d’utilitaire d’un trait, filet vert à l’arrière,
+ * nom en capitales larges avec le NN relié en vert. full = avec la signature « Spécialiste utilitaires », compact = sans, car = silhouette seule.
  * Les couleurs suivent --l1-ink et --l1-acc (clair / sombre).
  */
 export function Logo({ id = 'lg', variant = 'compact', className }: { id?: string; variant?: Variant; className?: string }) {
@@ -12,7 +12,7 @@ export function Logo({ id = 'lg', variant = 'compact', className }: { id?: strin
   return (
     <svg className={`logo1 ${className ?? ''}`} viewBox={vb} role="img" aria-label="Connect Auto">
       <defs>
-        <linearGradient id={`${id}t`} x1="744" y1="0" x2="880" y2="0" gradientUnits="userSpaceOnUse">
+        <linearGradient id={`${id}t`} x1={v1.tailGrad[0]} y1="0" x2={v1.tailGrad[1]} y2="0" gradientUnits="userSpaceOnUse">
           <stop offset="0" stopColor="#2EC95C" stopOpacity="0" />
           <stop offset=".35" stopColor="#2EC95C" />
           <stop offset="1" stopColor="#8AE3A5" />

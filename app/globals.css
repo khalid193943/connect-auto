@@ -1536,3 +1536,10 @@ html[data-theme='light'] .bch-chip { background: #eef0f3; border-color: #fff; co
 .lb-touch { display: none; }
 @media (hover: none) and (pointer: coarse) { .lb-touch { display: block; } .lb-mouse { display: none; } .lb-nav { display: none; } }
 @media (max-width: 640px) { .lb-stage { padding: 0; } .lb-img { border-radius: 0; } .lb-thumbs button { width: 56px; height: 42px; } }
+
+/* intro : couleurs du logo selon le thème (clair par défaut) */
+.intro .i-ink { fill: #F4F6F8; } .intro .i-acc { fill: #2EC95C; }
+html[data-theme='light'].intro-on body::after { background: #f3f4f6; }
+html[data-theme='light'] .intro { background: radial-gradient(60% 55% at 50% 46%, #ffffff 0%, #eef0f3 72%); }
+html[data-theme='light'] .intro .i-ink { fill: #15181C; } html[data-theme='light'] .intro .i-acc { fill: #1E9E46; }
+html[data-theme='light'] .intro-bar { background: #dde1e6; }
