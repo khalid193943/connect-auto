@@ -45,7 +45,7 @@ export async function saveVehicle(_: R, fd: FormData): Promise<R> {
   if (!price) return { ok: false, msg: 'Indiquez le prix.' }
   if (!year) return { ok: false, msg: 'Indiquez l’année.' }
   let photos: string[] = []
-  try { photos = JSON.parse(String(fd.get('photos') ?? '[]')).filter((x: unknown) => typeof x === 'string').slice(0, 40) } catch {}
+  try { photos = JSON.parse(String(fd.get('photos') ?? '[]')).filter((x: unknown) => typeof x === 'string').slice(0, 6) } catch {}
   const all = await list('vehicles')
   const ref = prev?.ref ?? `CA-${String(Math.max(100, ...all.map((v) => Number(v.ref.replace(/\D/g, '')) || 0)) + 1)}`
   const version = str(fd, 'version', 120)

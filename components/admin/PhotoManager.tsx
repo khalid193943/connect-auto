@@ -3,9 +3,9 @@ import { useRef, useState } from 'react'
 import { ArrowLeft, ArrowRight, Camera, Loader2, Trash2 } from 'lucide-react'
 import { uploadPhoto } from '@/lib/client-image'
 
-/** Photos d’un véhicule : prises au téléphone, réduites puis envoyées. La 1re photo est celle de l’annonce. */
-export function PhotoManager({ initial, enabled, name = 'photos' }: { initial: string[]; enabled: boolean; name?: string }) {
-  const [photos, setPhotos] = useState(initial)
+/** Photos d’un véhicule : prises au téléphone, réduites puis envoyées. La 1re photo est celle de l’annonce. 6 au maximum. */
+export function PhotoManager({ initial, enabled, name = 'photos', max = 6 }: { initial: string[]; enabled: boolean; name?: string; max?: number }) {
+  const [photos, setPhotos] = useState(initial.slice(0, max))
   const [busy, setBusy] = useState('')
   const [err, setErr] = useState('')
   const input = useRef<HTMLInputElement>(null)
@@ -13,7 +13,10 @@ export function PhotoManager({ initial, enabled, name = 'photos' }: { initial: s
   const add = async (files: FileList | null) => {
     if (!files?.length) return
     setErr('')
-    const list = Array.from(files)
+    const room = max - photos.length
+    const all = Array.from(files)
+    const list = all.slice(0, Math.max(0, room))
+    const skipped = all.length - list.length
     for (let i = 0; i < list.length; i++) {
       setBusy(`Envoi ${i + 1}/${list.length}…`)
       try {
@@ -24,6 +27,7 @@ export function PhotoManager({ initial, enabled, name = 'photos' }: { initial: s
       }
     }
     setBusy('')
+    if (skipped > 0) setErr(`${max} photos maximum par véhicule : ${skipped} photo${skipped > 1 ? 's' : ''} non ajoutée${skipped > 1 ? 's' : ''}. Supprimez-en une pour en mettre une autre.`)
     // signale au formulaire qu’il y a des changements
     input.current?.form?.dispatchEvent(new Event('change', { bubbles: true }))
   }
@@ -57,14 +61,17 @@ export function PhotoManager({ initial, enabled, name = 'photos' }: { initial: s
             </div>
           </div>
         ))}
-        <button type="button" className="ph-add" disabled={!enabled || !!busy} onClick={() => input.current?.click()}>
-          {busy ? <Loader2 className="spin-ico" /> : <Camera />}
-          {busy || 'Ajouter des photos'}
-        </button>
+        {photos.length < max && (
+          <button type="button" className="ph-add" disabled={!enabled || !!busy} onClick={() => input.current?.click()}>
+            {busy ? <Loader2 className="spin-ico" /> : <Camera />}
+            {busy || 'Ajouter des photos'}
+            {!busy && <small>{photos.length}/{max}</small>}
+          </button>
+        )}
       </div>
       <input ref={input} type="file" accept="image/*" multiple hidden onChange={(e) => { add(e.target.files); e.target.value = '' }} />
       {err && <p className="banner warn" style={{ margin: 0 }}>{err}</p>}
-      <p className="hint">La première photo apparaît sur l’annonce. Utilisez les flèches pour changer l’ordre.</p>
+      <p className="hint"><b>{photos.length}/{max} photos.</b> La première apparaît sur l’annonce ; les flèches changent l’ordre.{photos.length >= max && ' Pour en ajouter une autre, supprimez-en une.'}</p>
     </div>
   )
 }

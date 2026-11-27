@@ -334,3 +334,4 @@
 .perm input:checked + span { border-color: var(--a-acc); background: var(--a-acc-bg); color: #0f5a29; }
 .perm input:checked + span::before { background: var(--a-acc) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center / 14px no-repeat; border-color: var(--a-acc); }
 .perm input:focus-visible + span { outline: 2px solid var(--a-acc); outline-offset: 2px; }
+.ph-add small { font-size: 12px; font-weight: 700; color: var(--a-muted); }
