@@ -185,11 +185,16 @@ export interface Settings {
   iban?: string
 }
 
+/** Parties de l’espace garage qu’un compte « équipe » peut utiliser. */
+export type AdminSection = 'vehicules' | 'demandes' | 'documents' | 'site'
+
 export interface User {
   id: string
   login: string
   name: string
   role: 'gerant' | 'equipe'
+  /** Compte « équipe » : parties autorisées (absent = toutes, pour les anciens comptes). */
+  perms?: AdminSection[]
   passwordHash: string
   active: boolean
   createdAt: string

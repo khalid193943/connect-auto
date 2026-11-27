@@ -9,16 +9,16 @@ const DOCS = ['/admin/documents', '/admin/clients']
 const SETTINGS = ['/admin/reglages', '/admin/compte', '/admin/equipe', '/admin/registre']
 
 /** Ordinateur : barre latérale. Téléphone : bandeau en haut + 5 onglets en bas. */
-export function AdminNav({ newLeads, name, role, demo }: { newLeads: number; name: string; role: string; demo: boolean }) {
+export function AdminNav({ newLeads, name, role, demo, perms }: { newLeads: number; name: string; role: string; demo: boolean; perms: string[] }) {
   const p = usePathname()
   const under = (xs: string[]) => xs.some((x) => p.startsWith(x))
   const items = [
     { href: '/admin', label: 'Accueil', icon: Home, on: p === '/admin' },
-    { href: '/admin/vehicules', label: 'Véhicules', icon: Car, on: p.startsWith('/admin/vehicules') },
-    { href: '/admin/demandes', label: 'Demandes', icon: Inbox, on: p.startsWith('/admin/demandes'), badge: newLeads },
-    { href: '/admin/documents', label: 'Devis & factures', short: 'Factures', icon: FileText, on: under(DOCS) },
-    { href: '/admin/site', label: 'Mon site', icon: MonitorSmartphone, on: under(SITE) },
-  ]
+    { href: '/admin/vehicules', label: 'Véhicules', icon: Car, on: p.startsWith('/admin/vehicules'), sec: 'vehicules' },
+    { href: '/admin/demandes', label: 'Demandes', icon: Inbox, on: p.startsWith('/admin/demandes'), badge: newLeads, sec: 'demandes' },
+    { href: '/admin/documents', label: 'Devis & factures', short: 'Factures', icon: FileText, on: under(DOCS), sec: 'documents' },
+    { href: '/admin/site', label: 'Mon site', icon: MonitorSmartphone, on: under(SITE), sec: 'site' },
+  ].filter((t) => !t.sec || perms.includes(t.sec))
   const initial = name.trim().charAt(0).toUpperCase() || '?'
   return (
     <>
@@ -50,7 +50,7 @@ export function AdminNav({ newLeads, name, role, demo }: { newLeads: number; nam
         <Link href="/admin/reglages" className={`av ${under(SETTINGS) ? 'on' : ''}`} aria-label="Réglages et compte">{initial}</Link>
       </header>
 
-      <nav className="mbar" aria-label="Menu">
+      <nav className="mbar" aria-label="Menu" style={{ gridTemplateColumns: `repeat(${items.length}, 1fr)` }}>
         {items.map((t) => (
           <Link key={t.href} href={t.href} className={t.on ? 'on' : undefined}>
             <span className="ic"><t.icon />{t.badge ? <em>{t.badge}</em> : null}</span>

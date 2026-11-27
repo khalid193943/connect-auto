@@ -3,10 +3,10 @@ import { revalidatePath } from 'next/cache'
 import { isStoredUrl } from '@/lib/blob'
 import { redirect } from 'next/navigation'
 import { get, list, newId, nextNumber, put, remove } from '@/lib/store'
-import { hashPassword, login, logout, requireManager, requireSession } from '@/lib/auth'
+import { ALL_SECTIONS, hashPassword, login, logout, requireManager, requirePerm, requireSession } from '@/lib/auth'
 import { docNumber, isLocked } from '@/lib/docs'
 import { slugify } from '@/lib/format'
-import type { Category, Client, Doc, DocLine, DocStatus, DocType, Lead, PriceItem, Review, Service, Settings, User, Vehicle, VehicleStatus } from '@/lib/types'
+import type { AdminSection, Category, Client, Doc, DocLine, DocStatus, DocType, Lead, PriceItem, Review, Service, Settings, User, Vehicle, VehicleStatus } from '@/lib/types'
 import { SEED_SETTINGS } from '@/lib/seed'
 
 export type R = { ok: boolean; msg?: string; id?: string }
@@ -34,7 +34,7 @@ export async function logoutAction() {
 
 /* ---------------- Véhicules ---------------- */
 export async function saveVehicle(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('vehicules')
   const id = str(fd, 'id', 60)
   const prev = id ? await get('vehicles', id) : null
   const brand = str(fd, 'brand', 60)
@@ -96,7 +96,7 @@ export async function saveVehicle(_: R, fd: FormData): Promise<R> {
 }
 
 export async function setVehicleStatus(id: string, status: VehicleStatus) {
-  await requireSession()
+  await requirePerm('vehicules')
   const v = await get('vehicles', id)
   if (!v) return
   await put('vehicles', { ...v, status, updatedAt: now() })
@@ -104,7 +104,7 @@ export async function setVehicleStatus(id: string, status: VehicleStatus) {
 }
 
 export async function deleteVehicle(id: string) {
-  await requireSession()
+  await requirePerm('vehicules')
   await remove('vehicles', id)
   refreshSite()
   redirect('/admin/vehicules')
@@ -121,18 +121,18 @@ export async function deleteDemoData() {
 
 /* ---------------- Demandes ---------------- */
 export async function setLeadStatus(id: string, status: Lead['status']) {
-  await requireSession()
+  await requirePerm('demandes')
   const l = await get('leads', id)
   if (l) await put('leads', { ...l, status })
   revalidatePath('/admin', 'layout')
 }
 export async function deleteLead(id: string) {
-  await requireSession()
+  await requirePerm('demandes')
   await remove('leads', id)
   redirect('/admin/demandes')
 }
 export async function leadToClient(id: string) {
-  await requireSession()
+  await requirePerm('demandes')
   const l = await get('leads', id)
   if (!l) redirect('/admin/demandes')
   const existing = (await list('clients')).find((c) => c.phone.replace(/\D/g, '') === l.phone.replace(/\D/g, ''))
@@ -144,7 +144,7 @@ export async function leadToClient(id: string) {
 
 /* ---------------- Clients ---------------- */
 export async function saveClient(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('documents')
   const id = str(fd, 'id', 60)
   const prev = id ? await get('clients', id) : null
   const name = str(fd, 'name', 120)
@@ -167,7 +167,7 @@ export async function saveClient(_: R, fd: FormData): Promise<R> {
   return { ok: true, msg: 'Fiche client enregistrée.', id: c.id }
 }
 export async function deleteClient(id: string) {
-  await requireSession()
+  await requirePerm('documents')
   await remove('clients', id)
   redirect('/admin/clients')
 }
@@ -179,7 +179,7 @@ async function assignNumber(type: DocType) {
 }
 
 export async function saveDoc(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('documents')
   const id = str(fd, 'id', 60)
   const prev = id ? await get('docs', id) : null
   if (prev && isLocked(prev)) return { ok: false, msg: 'Une facture émise ne peut plus être modifiée. Faites un avoir si besoin.' }
@@ -235,7 +235,7 @@ export async function saveDoc(_: R, fd: FormData): Promise<R> {
 }
 
 export async function setDocStatus(id: string, status: DocStatus) {
-  await requireSession()
+  await requirePerm('documents')
   const d = await get('docs', id)
   if (!d || isLocked(d)) return
   await put('docs', { ...d, status })
@@ -243,7 +243,7 @@ export async function setDocStatus(id: string, status: DocStatus) {
 }
 
 export async function convertDoc(id: string, to: DocType) {
-  await requireSession()
+  await requirePerm('documents')
   const d = await get('docs', id)
   if (!d) redirect('/admin/documents')
   const nd: Doc = {
@@ -267,7 +267,7 @@ export async function convertDoc(id: string, to: DocType) {
 }
 
 export async function emitInvoice(id: string) {
-  await requireSession()
+  await requirePerm('documents')
   const d = await get('docs', id)
   if (!d || d.type !== 'facture' || isLocked(d)) return
   await put('docs', { ...d, number: d.number || (await assignNumber('facture')), status: 'emise', date: now().slice(0, 10) })
@@ -275,7 +275,7 @@ export async function emitInvoice(id: string) {
 }
 
 export async function markPaid(id: string, method: string) {
-  await requireSession()
+  await requirePerm('documents')
   const d = await get('docs', id)
   if (!d) return
   if (d.type === 'facture' && !d.number) return
@@ -284,7 +284,7 @@ export async function markPaid(id: string, method: string) {
 }
 
 export async function deleteDoc(id: string) {
-  await requireSession()
+  await requirePerm('documents')
   const d = await get('docs', id)
   if (d && isLocked(d)) return
   await remove('docs', id)
@@ -293,7 +293,7 @@ export async function deleteDoc(id: string) {
 
 /* ---------------- Services & tarifs ---------------- */
 export async function saveService(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('site')
   const id = str(fd, 'id', 60)
   const prev = await get('services', id)
   if (!prev) return { ok: false, msg: 'Service introuvable.' }
@@ -312,7 +312,7 @@ export async function saveService(_: R, fd: FormData): Promise<R> {
 }
 
 export async function savePrices(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('site')
   let rows: PriceItem[] = []
   try { rows = JSON.parse(String(fd.get('rows') ?? '[]')) } catch { return { ok: false, msg: 'Données invalides.' } }
   const keep = new Set<string>()
@@ -336,7 +336,7 @@ async function settings(): Promise<Settings> {
 }
 
 export async function saveTexts(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('site')
   const s = await settings()
   const next: Settings = {
     ...s,
@@ -356,7 +356,7 @@ export async function saveTexts(_: R, fd: FormData): Promise<R> {
 }
 
 export async function saveContact(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('site')
   const s = await settings()
   const hours: Settings['hours'] = {}
   for (const d of ['0', '1', '2', '3', '4', '5', '6']) {
@@ -410,7 +410,7 @@ export async function saveLegal(_: R, fd: FormData): Promise<R> {
 }
 
 export async function setSlotImage(slot: string, url: string | null) {
-  await requireSession()
+  await requirePerm('site')
   const s = await settings()
   const images = { ...s.images }
   if (url && (isStoredUrl(url) || /^https:\/\//.test(url))) images[slot] = url
@@ -420,7 +420,7 @@ export async function setSlotImage(slot: string, url: string | null) {
 }
 
 export async function setBrandLogo(brand: string, url: string | null) {
-  await requireSession()
+  await requirePerm('site')
   const s = await settings()
   const logos = { ...(s.brandLogos ?? {}) }
   const b = brand.trim().slice(0, 40)
@@ -432,7 +432,7 @@ export async function setBrandLogo(brand: string, url: string | null) {
 
 /* ---------------- Avis ---------------- */
 export async function saveReview(_: R, fd: FormData): Promise<R> {
-  await requireSession()
+  await requirePerm('site')
   const author = str(fd, 'author', 80)
   const text = str(fd, 'text', 1200)
   if (!author || !text) return { ok: false, msg: 'Indiquez le nom et le texte de l’avis.' }
@@ -442,7 +442,7 @@ export async function saveReview(_: R, fd: FormData): Promise<R> {
   return { ok: true, msg: 'Avis ajouté au site.' }
 }
 export async function deleteReview(id: string) {
-  await requireSession()
+  await requirePerm('site')
   await remove('reviews', id)
   refreshSite()
 }
@@ -462,11 +462,15 @@ export async function saveUser(_: R, fd: FormData): Promise<R> {
   if (!prev && password.length < 6) return { ok: false, msg: 'Mot de passe de 6 caractères minimum.' }
   if (password && password.length < 6) return { ok: false, msg: 'Mot de passe de 6 caractères minimum.' }
   const active = prev?.id === me.uid ? true : bool(fd, 'active')
+  const role: User['role'] = prev?.id === me.uid ? 'gerant' : str(fd, 'role', 10) === 'gerant' ? 'gerant' : 'equipe'
+  const perms = fd.getAll('perms').map(String).filter((x): x is AdminSection => (ALL_SECTIONS as string[]).includes(x))
+  if (role === 'equipe' && perms.length === 0) return { ok: false, msg: 'Cochez au moins une partie que cette personne peut gérer.' }
   const u: User = {
     id: prev?.id ?? newId('u'),
     login: loginName,
     name,
-    role: prev?.id === me.uid ? 'gerant' : str(fd, 'role', 10) === 'gerant' ? 'gerant' : 'equipe',
+    role,
+    perms: role === 'equipe' ? perms : undefined,
     passwordHash: password ? await hashPassword(password) : prev!.passwordHash,
     active: prev ? active : true,
     createdAt: prev?.createdAt ?? now(),

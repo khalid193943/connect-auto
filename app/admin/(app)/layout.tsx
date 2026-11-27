@@ -10,7 +10,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const fresh = leads.filter((l) => l.status === 'nouvelle').length
   return (
     <div className="shell">
-      <AdminNav newLeads={fresh} name={me.name} role={me.role} demo={!HAS_DB} />
+      <AdminNav newLeads={fresh} name={me.name} role={me.role} demo={!HAS_DB} perms={me.perms ?? []} />
       <div className="content">{children}</div>
     </div>
   )

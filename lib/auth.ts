@@ -5,7 +5,7 @@ import { SignJWT, jwtVerify } from 'jose'
 import bcrypt from 'bcryptjs'
 import { createHash } from 'node:crypto'
 import { HAS_DB, list, put } from './store'
-import type { User } from './types'
+import type { AdminSection, User } from './types'
 
 const COOKIE = 'ca_session'
 const secretKey = () =>
@@ -14,7 +14,7 @@ const secretKey = () =>
       createHash('sha256').update('connect-auto|' + (process.env.DATABASE_URL || process.env.POSTGRES_URL || 'demo')).digest('hex'),
   )
 
-export interface Session { uid: string; name: string; role: User['role']; login: string }
+export interface Session { uid: string; name: string; role: User['role']; login: string; perms?: AdminSection[] }
 
 export const DEMO_LOGIN = { login: 'fouad', password: 'demo' }
 
@@ -64,13 +64,27 @@ export async function getSession(): Promise<Session | null> {
   }
 }
 
+export const ALL_SECTIONS: AdminSection[] = ['vehicules', 'demandes', 'documents', 'site']
+export const SECTION_LABELS: Record<AdminSection, string> = { vehicules: 'Véhicules', demandes: 'Demandes', documents: 'Devis & factures', site: 'Mon site' }
+
 export async function requireSession(): Promise<Session> {
   const s = await getSession()
   if (!s) redirect('/admin/connexion')
   const users = await findUsers()
   const u = users.find((x) => x.id === s.uid)
   if (!u || !u.active) redirect('/admin/connexion')
-  return { ...s, name: u.name, role: u.role }
+  const perms = u.role === 'gerant' ? ALL_SECTIONS : (u.perms?.length ? u.perms : ALL_SECTIONS)
+  return { ...s, name: u.name, role: u.role, perms }
+}
+
+/** Le compte peut-il utiliser cette partie de l’espace garage ? (le gérant peut tout) */
+export const can = (s: Session, sec: AdminSection) => s.role === 'gerant' || (s.perms ?? ALL_SECTIONS).includes(sec)
+
+/** Bloque une page ou une action réservée à une partie de l’espace garage. */
+export async function requirePerm(sec: AdminSection): Promise<Session> {
+  const s = await requireSession()
+  if (!can(s, sec)) redirect('/admin')
+  return s
 }
 
 export async function requireManager(): Promise<Session> {
@@ -80,3 +94,12 @@ export async function requireManager(): Promise<Session> {
 }
 
 export const hashPassword = (p: string) => bcrypt.hash(p, 10)
+
+/** Pour les routes API (sans redirection) : la session active a-t-elle accès à cette partie ? */
+export async function sessionCan(sec: AdminSection): Promise<boolean> {
+  const s = await getSession()
+  if (!s) return false
+  const u = (await findUsers()).find((x) => x.id === s.uid)
+  if (!u || !u.active) return false
+  return u.role === 'gerant' || !u.perms?.length || u.perms.includes(sec)
+}

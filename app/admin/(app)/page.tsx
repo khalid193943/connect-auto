@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, Car, FilePlus2, Inbox, Info, Plus, ReceiptEuro } from 'lucide-react'
-import { requireSession } from '@/lib/auth'
+import { can, requireSession } from '@/lib/auth'
 import { HAS_BLOB, HAS_DB, list } from '@/lib/store'
 import { LeadRow, VehicleRow } from '@/components/admin/ui'
 import { ConfirmButton } from '@/components/admin/ActionForm'
@@ -36,38 +36,38 @@ export default async function Dashboard() {
       {HAS_DB && !HAS_BLOB && <p className="banner warn"><Info /> <span>Le stockage des photos (Vercel Blob) n’est pas encore activé.</span></p>}
 
       <div className="kpis">
-        <Link href="/admin/demandes" className={`kpi ${fresh.length ? 'hot' : ''}`}>
+        {can(me, 'demandes') && <Link href="/admin/demandes" className={`kpi ${fresh.length ? 'hot' : ''}`}>
           <span className="kpi-ic"><Inbox /></span>
           <span className="kpi-tx"><small>Nouvelles demandes</small><b>{fresh.length}</b><i>{leads.length} au total</i></span>
           <ArrowRight className="go" />
-        </Link>
-        <Link href="/admin/vehicules" className="kpi">
+        </Link>}
+        {can(me, 'vehicules') && <Link href="/admin/vehicules" className="kpi">
           <span className="kpi-ic"><Car /></span>
           <span className="kpi-tx"><small>Véhicules en vente</small><b>{onSale}</b><i>{reserved} réservé{s(reserved)}</i></span>
           <ArrowRight className="go" />
-        </Link>
-        <Link href="/admin/documents?f=apayer" className="kpi">
+        </Link>}
+        {can(me, 'documents') && <Link href="/admin/documents?f=apayer" className="kpi">
           <span className="kpi-ic"><ReceiptEuro /></span>
           <span className="kpi-tx"><small>À encaisser</small><b>{eur(unpaid)}</b><i>{unpaidDocs.length} facture{s(unpaidDocs.length)} en attente</i></span>
           <ArrowRight className="go" />
-        </Link>
+        </Link>}
       </div>
 
       <div className="quick">
-        <Link href="/admin/vehicules/nouveau" className="b pri"><Plus /> Ajouter un véhicule</Link>
-        <Link href="/admin/documents/nouveau?type=devis" className="b"><FilePlus2 /> Nouveau devis</Link>
-        <Link href="/admin/documents/nouveau?type=facture" className="b"><FilePlus2 /> Nouvelle facture</Link>
+        {can(me, 'vehicules') && <Link href="/admin/vehicules/nouveau" className="b pri"><Plus /> Ajouter un véhicule</Link>}
+        {can(me, 'documents') && <Link href="/admin/documents/nouveau?type=devis" className="b"><FilePlus2 /> Nouveau devis</Link>}
+        {can(me, 'documents') && <Link href="/admin/documents/nouveau?type=facture" className="b"><FilePlus2 /> Nouvelle facture</Link>}
       </div>
 
       <div className="dash-cols">
-        <section className="card flat">
+        {can(me, 'demandes') && <section className="card flat">
           <div className="card-head"><h2>Dernières demandes</h2><Link href="/admin/demandes">Tout voir <ArrowRight /></Link></div>
           <div className="rows">{recentLeads.length ? recentLeads.map((l) => <LeadRow key={l.id} l={l} />) : <p className="empty-a">Les demandes du site arriveront ici.</p>}</div>
-        </section>
-        <section className="card flat">
+        </section>}
+        {can(me, 'vehicules') && <section className="card flat">
           <div className="card-head"><h2>Véhicules récents</h2><Link href="/admin/vehicules">Tout voir <ArrowRight /></Link></div>
           <div className="rows">{lastVehicles.map((v) => <VehicleRow key={v.id} v={v} />)}</div>
-        </section>
+        </section>}
       </div>
 
       {demoCount > 0 && me.role === 'gerant' && (

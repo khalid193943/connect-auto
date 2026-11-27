@@ -1,6 +1,6 @@
 import { PDFDocument, StandardFonts, rgb, type PDFFont, type PDFPage } from 'pdf-lib'
 import { get } from '@/lib/store'
-import { getSession } from '@/lib/auth'
+import { sessionCan } from '@/lib/auth'
 import { getSettings } from '@/lib/data'
 import { DOC_LABEL, totals } from '@/lib/docs'
 import { LOGO_DOC_PNG } from '@/lib/brand/logo-doc'
@@ -148,7 +148,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
   const d = await get('docs', id)
   if (!d) return new Response('Document introuvable', { status: 404 })
   const t = new URL(req.url).searchParams.get('t')
-  if (t !== d.token && !(await getSession())) return new Response('Accès refusé', { status: 403 })
+  if (t !== d.token && !(await sessionCan('documents'))) return new Response('Accès refusé', { status: 403 })
   if (d.type === 'facture' && !d.number) return new Response('Facture non émise', { status: 409 })
   const bytes = await render(d, await getSettings())
   return new Response(Buffer.from(bytes), {
